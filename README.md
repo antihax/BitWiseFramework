@@ -2,8 +2,8 @@
 
 ## Documentation
 
-[Class documentation](docs/index_classes.md)
-[Examples](docs/index_examples.md)
+- [Class documentation](docs/index_classes.md)
+- [Examples](docs/index_examples.md)
 
 ## About
 
