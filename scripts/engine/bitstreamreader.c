@@ -48,7 +48,6 @@ class BitStreamReader {
 
 		// Get the next integer if we need to.
 		if (m_BitIndex / SIZE_OF_INT_BITS != m_WorkingIndex) {
-
 			ctx.Read(m_Working);
 			m_WorkingIndex = m_BitIndex / SIZE_OF_INT_BITS;
 		}
