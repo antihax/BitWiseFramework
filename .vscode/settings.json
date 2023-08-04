@@ -1,0 +1,4 @@
+{
+  "clang-format.assumeFilename": "hello.java",
+  "editor.formatOnSave": true
+}
