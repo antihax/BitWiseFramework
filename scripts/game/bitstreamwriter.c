@@ -57,6 +57,23 @@ class BitStreamWriter {
 		return value;
 	}
 
+	/***
+	 * @brief Writes an object by network ID to the bitstream.
+	 * @param object The object to be written to the bitstream.
+	 * @return Returns true if the operation is successful, false otherwise.
+	 */
+	bool WriteObject(Object object) {
+		int high, low;
+		if (!object)
+			return false;
+
+		// Get the network ID.
+		object.GetNetworkID(high, low);
+		writeSInt(high, 32);
+		writeSInt(low, 32);
+		return true;
+	}
+
 	/**
 	 * WriteUint is a function that writes an unsigned integer value to a bitstream.
 	 *

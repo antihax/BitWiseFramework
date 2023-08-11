@@ -21,12 +21,21 @@ void assert (bool condition, int value = 0, int expected = 0) {
 	}
 }
 
-void test_Bitstream() {
+void test_addfunc(func fn) {
+	Print(fn);
+}
 
+void test_testme() {
+	Print("Test me!");
+}
+
+void test_Bitstream() {
+	test_addfunc(test_testme);
 	int prev = TickCount(0);
 
 	// Initialize BitStream
 	FileSerializer fs = new FileSerializer();
+	
 	fs.Open("$profile:\BitWiseTest", FileMode.WRITE);
 	BitStreamWriter bs = new BitStreamWriter(fs);
 

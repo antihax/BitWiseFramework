@@ -18,6 +18,7 @@ title: BitStreamWriter
 | int | **[GetIndex](Classes/class_bit_stream_writer.md#function-getindex)**()<br>GetIndex returns the current bit index.  |
 | void | **[Align](Classes/class_bit_stream_writer.md#function-align)**()<br>Aligns the bitstream to the next integer boundary.  |
 | bool | **[WriteBool](Classes/class_bit_stream_writer.md#function-writebool)**(bool value)<br>Writes a boolean value to the bitstream and returns the original value.  |
+| bool | **[WriteObject](Classes/class_bit_stream_writer.md#function-writeobject)**(Object object) |
 | bool | **[WriteUint](Classes/class_bit_stream_writer.md#function-writeuint)**(int value, int bits) |
 | void | **[writeSInt](Classes/class_bit_stream_writer.md#function-writesint)**(int value, int bits) |
 
@@ -93,6 +94,15 @@ Writes a boolean value to the bitstream and returns the original value.
 
 **Return**: The original boolean value that was written to the bitstream. 
 
+### function WriteObject
+
+```cpp
+bool WriteObject(
+    Object object
+)
+```
+
+
 ### function WriteUint
 
 ```cpp
@@ -156,4 +166,4 @@ public int m_WorkingIndex = 0;
 
 -------------------------------
 
-Updated on 2023-08-04 at 16:20:12 -0500
+Updated on 2023-08-10 at 22:33:44 -0500

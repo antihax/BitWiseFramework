@@ -11,7 +11,6 @@
 #ifdef DIAG_DEVELOPER
 modded class DayZGame {
 	void DayZGame() {
-		test_Bitstream();
 	}
 
 	override void OnRPC(PlayerIdentity sender, Object target, int rpc_type, ParamsReadContext ctx) {

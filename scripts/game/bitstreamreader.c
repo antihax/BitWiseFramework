@@ -19,6 +19,10 @@ class BitStreamReader {
 	private int m_Working;
 	private int m_WorkingIndex;
 
+/** 
+ * 
+*/
+
 	void BitStreamReader(Serializer _ctx) {
 		ctx = _ctx;
 		m_BitIndex = 0;
