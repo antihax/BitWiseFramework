@@ -1,5 +1,7 @@
 @echo off
 taskkill /im DayZDiag_x64.exe /F
+rmdir /s /q p:\BitWiseFramework\docs\
+mkdir p:\BitWiseFramework\docs\
 doxygen
 DayZInput.ps1
 rem call npx moxygen --anchors --output="p:\BitWiseFramework\docs\README.md" "p:\BitWiseFramework\Source\tempdocs\xml"
@@ -20,5 +22,6 @@ set profileFolder=%DAYZ%\dayzOffline.chernarusplus\profiles
 set profileFolderClient=%DAYZ%\mpmissions\dayzOffline.chernarusplus\profilesClient
 set configPath=%DAYZ%\mpmissions\dayzOffline.chernarusplus\serverDZ.cfg
 
- start %DAYZ%\DayZDiag_x64.exe "-server" "-mod=%currentMod%%allclientmods%" "-cpuCount=32"  "-config=%configPath%" "-profiles=%profileFolder%" -doLogs -newErrorsAreWarnings=1 -nosplash -noPause -filePatching 
-  start %DAYZ%\DayZDiag_x64.exe "-mod=%currentMod%%allclientmods%" "-cpuCount=32" "-connect=127.0.0.1" "-port=2302" "-profiles=%profileFolderClient%" -dologs -newErrorsAreWarnings=1  -nosplash -noPause -filePatching 
+ start %DAYZ%\DayZDiag_x64.exe "-server" "-mod=%currentMod%%allclientmods%" "-cpuCount=32"  "-config=%configPath%" "-profiles=%profileFolder%" -doLogs -newErrorsAreWarnings=1 -nosplash -noPause -filePatching -scrDef=BITWISEDEBUG
+rem start %DAYZSERVER%\DayZServer_x64.exe "-server" "-mod=%currentMod%%allclientmods%" "-cpuCount=32"  "-config=%configPath%" "-profiles=%profileFolder%" -doLogs -nosplash -noPause -filePatching 
+ start %DAYZ%\DayZDiag_x64.exe "-mod=%currentMod%%allclientmods%" "-cpuCount=32" "-connect=127.0.0.1" "-port=2302" "-profiles=%profileFolderClient%" -dologs -newErrorsAreWarnings=1  -nosplash -noPause -filePatching -scrDef=BITWISEDEBUG

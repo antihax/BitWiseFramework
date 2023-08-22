@@ -1,5 +1,5 @@
-#ifdef DIAG_DEVELOPER
 
+#ifdef BITWISEDEBUG
 class BitWiseBenchmarks {
 	ref ScriptInvoker ReusetestInvoker;
 	ref ScriptCaller ReusetestCaller;
@@ -17,37 +17,37 @@ class BitWiseBenchmarks {
 		EnProfiler.Enable(true, true);
 		EnProfiler.SetTimeResolution(1000);
 
-		for (i = 0; i < 1000000; i++) {
+		for (i = 0; i < 1000000; ++i) {
 			BenchmarkScriptInvoker();
 		}
 		time = EnProfiler.GetTimeOfFunc("BenchmarkScriptInvoker", Type(), true);
 		Print("BenchmarkScriptInvoker took " + time.ToString());
 
-		for (i = 0; i < 1000000; i++) {
+		for (i = 0; i < 1000000; ++i) {
 			BenchmarkScriptCaller();
 		}
 		time = EnProfiler.GetTimeOfFunc("BenchmarkScriptCaller", Type(), true);
 		Print("BenchmarkScriptCaller took " + time.ToString());
 
-		for (i = 0; i < 1000000; i++) {
+		for (i = 0; i < 1000000; ++i) {
 			BenchmarkCallFunction();
 		}
 		time = EnProfiler.GetTimeOfFunc("BenchmarkCallFunction", Type(), true);
 		Print("BenchmarkCallFunction took " + time.ToString());
 
-		for (i = 0; i < 1000000; i++) {
+		for (i = 0; i < 1000000; ++i) {
 			BenchmarkReuseScriptCaller();
 		}
 		time = EnProfiler.GetTimeOfFunc("BenchmarkReuseScriptCaller", Type(), true);
 		Print("BenchmarkReuseScriptCaller took " + time.ToString());
 
-		for (i = 0; i < 1000000; i++) {
+		for (i = 0; i < 1000000; ++i) {
 			BenchmarkReuseScriptInvoke();
 		}
 		time = EnProfiler.GetTimeOfFunc("BenchmarkReuseScriptInvoke", Type(), true);
 		Print("BenchmarkReuseScriptInvoke took " + time.ToString());
 
-		EnProfiler.Enable(false);
+		EnProfiler.Enable(false, true);
 	}
 
 	void CallMeMaybe(int number) {
@@ -82,5 +82,4 @@ class BitWiseBenchmarks {
 		ReusetestInvoker.Invoke(1234);
 	}
 }
-
 #endif

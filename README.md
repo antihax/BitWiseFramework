@@ -24,8 +24,6 @@ Widespread use of this is not expected, I just want something to save repeating 
 - Hoffman string coding, including UTF support.
 - RPC registration assigning new `rpc_type` as needed to callback a function on receive. Synchronized between client and server.
 
-
-
 ## License
 
 This work is licensed under the Creative Commons Attribution-NoDerivatives 4.0 International [(CC BY-ND 4.0)](https://creativecommons.org/licenses/by-nd/4.0/)

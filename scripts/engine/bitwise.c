@@ -10,6 +10,7 @@
 
 #define BITWISEFRAMEWORK
 static const int SIZE_OF_INT_BITS = 32;
+static const int RPC_ANTIHAX_BITWISE = -1456746571;
 /// @brief  A framework for creating RPCs (Remote Procedure Calls) in DayZ in an optimized way to minimize bandwidth usage and resolve collisions.
 ///
 /// @details This framework is designed to be used by modders to create RPCs in DayZ.
@@ -20,9 +21,9 @@ class BitWiseHelpers {
 	/// @brief Binary representation of the value, useful for debugging.
 	/// @param value
 	/// @return string of the value in binary.
-	string BitRepresentation(int value) {
+	static string BitRepresentation(int value) {
 		string result = "";
-		for (int i = 0; i < 32; i++) {
+		for (int i = 0; i < 32; ++i) {
 			if (value & (1 << i))
 				result = "1" + result;
 			else
@@ -33,12 +34,28 @@ class BitWiseHelpers {
 
 	/// @brief Helper function to dump the stack to a string with a message.
 	/// @param str Message before the stack dump.
-	void WarningWithStack(string message) {
+	static void WarningWithStack(string message) {
 		string str;
 		DumpStackString(str);
 		Print("BitStream: " + message + "\n" + str);
 	}
+
+	/**
+	 * @brief Determine how many bits are used by a value
+	 * @param n The value to check.
+	 * @return The number of bits used.
+	 */
+
+	static int BitSize(int n) {
+		int bits = 0;
+		while (n != 0) {
+			n >>= 1;
+			bits++;
+		}
+		return bits;
+	}
 }
+
 /**
 @note Netcode statistics of DayZ for reference. No fragmentation occurred indicating MTU discovery and boundaries.
 ==================================================================================================================================

@@ -1,6 +1,7 @@
 #ifdef SERVER
 modded class MissionServer {
-#ifdef DIAG_DEVELOPER
+
+#ifdef BITWISEDEBUG
 	override void OnInit() {
 		auto b = BitWiseBenchmarks();
 		b.Run();
@@ -9,24 +10,10 @@ modded class MissionServer {
 	}
 #endif
 
-	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity) {
-		super.InvokeOnConnect(player, identity);
-	}
-
-	/*
-	ClientConnectedEventTypeID
-	ClientPrepareEventTypeID  -  OnClientPrepareEvent
-	ClientReadyEventTypeID - OnClientReadyEvent -  InvokeOnConnect
-	*/
-
-	override void OnEvent(EventType eventTypeId, Param params) {
-		switch (eventTypeId) {
-		case ClientConnectedEventTypeID:
-			// OnClientConnectedEvent
-			// send RPC table to client
-			break;
-		}
-		super.OnEvent(eventTypeId, params);
+	// Send RPC table to client very early
+	override void OnClientPrepareEvent(PlayerIdentity identity, out bool useDB, out vector pos, out float yaw, out int preloadTimeout) {
+		GetBitWiseManager()._SendRPCTable(identity);
+		super.OnClientPrepareEvent(identity, useDB, pos, yaw, preloadTimeout);
 	}
 }
 #endif

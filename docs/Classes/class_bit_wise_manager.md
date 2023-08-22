@@ -7,7 +7,7 @@ title: BitWiseManager
 
 
 
-
+ [More...](#detailed-description)
 
 ## Public Functions
 
@@ -15,9 +15,11 @@ title: BitWiseManager
 | -------------- | -------------- |
 | void | **[BitWiseManager](Classes/class_bit_wise_manager.md#function-bitwisemanager)**() |
 | void | **[~BitWiseManager](Classes/class_bit_wise_manager.md#function-~bitwisemanager)**() |
-| int | **[RegisterEndpoint](Classes/class_bit_wise_manager.md#function-registerendpoint)**(string mod, string keyword, func fn) |
+| int | **[GetIndexForKeyword](Classes/class_bit_wise_manager.md#function-getindexforkeyword)**(string mod, string keyword) |
+| int | **[ConnectEndpoint](Classes/class_bit_wise_manager.md#function-connectendpoint)**(string mod, string keyword, ScriptCaller caller)<br>Connects an endpoint to a script caller. The endpoint is invoked when the RPC is called.  |
 | public string | **[EndPointName](Classes/class_bit_wise_manager.md#function-endpointname)**(string mod, string keyword) |
-| void | **[OnRPC](Classes/class_bit_wise_manager.md#function-onrpc)**(PlayerIdentity sender, Object target, int rpc_type, ParamsReadContext ctx) |
+| void | **[_OnRPC](Classes/class_bit_wise_manager.md#function--onrpc)**(PlayerIdentity sender, Object target, ParamsReadContext ctx) |
+| public void | **[_RPC_RPCTable](Classes/class_bit_wise_manager.md#function--rpc-rpctable)**(ParamsReadContext ctx) |
 
 ## Public Attributes
 
@@ -26,7 +28,18 @@ title: BitWiseManager
 | protected ref map< int, ref ScriptCaller > | **[m_Endpoints](Classes/class_bit_wise_manager.md#variable-m-endpoints)**  |
 | protected ref map< string, ref ScriptCaller > | **[m_PendingEndpoints](Classes/class_bit_wise_manager.md#variable-m-pendingendpoints)**  |
 | protected ref map< string, int > | **[m_EndpointNames](Classes/class_bit_wise_manager.md#variable-m-endpointnames)**  |
+| protected bool | **[m_DirtyRPCTable](Classes/class_bit_wise_manager.md#variable-m-dirtyrpctable)**  |
+| protected ref [BitWiseScriptRPC](Classes/class_bit_wise_script_r_p_c.md) | **[m_RPCTableRPC](Classes/class_bit_wise_manager.md#variable-m-rpctablerpc)**  |
 | protected int | **[m_EndpointIndex](Classes/class_bit_wise_manager.md#variable-m-endpointindex)**  |
+
+## Detailed Description
+
+```cpp
+class BitWiseManager;
+```
+
+
+RPC registration and invokation for BitWise RPCs. This class is not accessible to developers and should be accessed through GetBitWiseManager(). 
 
 ## Public Functions Documentation
 
@@ -44,16 +57,36 @@ void ~BitWiseManager()
 ```
 
 
-### function RegisterEndpoint
+### function GetIndexForKeyword
 
 ```cpp
-int RegisterEndpoint(
+int GetIndexForKeyword(
     string mod,
-    string keyword,
-    func fn
+    string keyword
 )
 ```
 
+
+### function ConnectEndpoint
+
+```cpp
+int ConnectEndpoint(
+    string mod,
+    string keyword,
+    ScriptCaller caller
+)
+```
+
+Connects an endpoint to a script caller. The endpoint is invoked when the RPC is called. 
+
+**Parameters**: 
+
+  * **mod** The mod name. 
+  * **keyword** The keyword. 
+  * **caller** The script caller to run on RPC. 
+
+
+**Return**: The endpoint index. 
 
 ### function EndPointName
 
@@ -65,13 +98,21 @@ public string EndPointName(
 ```
 
 
-### function OnRPC
+### function _OnRPC
 
 ```cpp
-void OnRPC(
+void _OnRPC(
     PlayerIdentity sender,
     Object target,
-    int rpc_type,
+    ParamsReadContext ctx
+)
+```
+
+
+### function _RPC_RPCTable
+
+```cpp
+public void _RPC_RPCTable(
     ParamsReadContext ctx
 )
 ```
@@ -100,6 +141,20 @@ protected ref map< string, int > m_EndpointNames;
 ```
 
 
+### variable m_DirtyRPCTable
+
+```cpp
+protected bool m_DirtyRPCTable = true;
+```
+
+
+### variable m_RPCTableRPC
+
+```cpp
+protected ref BitWiseScriptRPC m_RPCTableRPC;
+```
+
+
 ### variable m_EndpointIndex
 
 ```cpp
@@ -109,4 +164,4 @@ protected int m_EndpointIndex;
 
 -------------------------------
 
-Updated on 2023-08-10 at 22:33:44 -0500
+Updated on 2023-08-21 at 22:55:10 -0500

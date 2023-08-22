@@ -16,6 +16,7 @@ A framework for creating RPCs (Remote Procedure Calls) in DayZ in an optimized w
 | -------------- | -------------- |
 | string | **[BitRepresentation](Classes/class_bit_wise_helpers.md#function-bitrepresentation)**(int value)<br>Binary representation of the value, useful for debugging.  |
 | void | **[WarningWithStack](Classes/class_bit_wise_helpers.md#function-warningwithstack)**(string message)<br>Helper function to dump the stack to a string with a message.  |
+| int | **[BitSize](Classes/class_bit_wise_helpers.md#function-bitsize)**(int n)<br>Determine how many bits are used by a value.  |
 
 ## Detailed Description
 
@@ -34,7 +35,7 @@ Helper functions for the RPC framework held within a namespace to avoid collisio
 ### function BitRepresentation
 
 ```cpp
-string BitRepresentation(
+static string BitRepresentation(
     int value
 )
 ```
@@ -51,7 +52,7 @@ Binary representation of the value, useful for debugging.
 ### function WarningWithStack
 
 ```cpp
-void WarningWithStack(
+static void WarningWithStack(
     string message
 )
 ```
@@ -63,6 +64,23 @@ Helper function to dump the stack to a string with a message.
   * **str** Message before the stack dump. 
 
 
+### function BitSize
+
+```cpp
+static int BitSize(
+    int n
+)
+```
+
+Determine how many bits are used by a value. 
+
+**Parameters**: 
+
+  * **n** The value to check. 
+
+
+**Return**: The number of bits used. 
+
 -------------------------------
 
-Updated on 2023-08-10 at 22:33:44 -0500
+Updated on 2023-08-21 at 22:55:10 -0500

@@ -9,25 +9,34 @@ title: BitStreamWriter
 
  [More...](#detailed-description)
 
+Inherited by [BitWiseScriptRPC](Classes/class_bit_wise_script_r_p_c.md)
+
 ## Public Functions
 
 |                | Name           |
 | -------------- | -------------- |
-| void | **[BitStreamWriter](Classes/class_bit_stream_writer.md#function-bitstreamwriter)**(Serializer _ctx) |
+| void | **[BitStreamWriter](Classes/class_bit_stream_writer.md#function-bitstreamwriter)**(Serializer context =NULL) |
 | void | **[~BitStreamWriter](Classes/class_bit_stream_writer.md#function-~bitstreamwriter)**() |
 | int | **[GetIndex](Classes/class_bit_stream_writer.md#function-getindex)**()<br>GetIndex returns the current bit index.  |
-| void | **[Align](Classes/class_bit_stream_writer.md#function-align)**()<br>Aligns the bitstream to the next integer boundary.  |
-| bool | **[WriteBool](Classes/class_bit_stream_writer.md#function-writebool)**(bool value)<br>Writes a boolean value to the bitstream and returns the original value.  |
-| bool | **[WriteObject](Classes/class_bit_stream_writer.md#function-writeobject)**(Object object) |
-| bool | **[WriteUint](Classes/class_bit_stream_writer.md#function-writeuint)**(int value, int bits) |
-| void | **[writeSInt](Classes/class_bit_stream_writer.md#function-writesint)**(int value, int bits) |
+| bool | **[Align](Classes/class_bit_stream_writer.md#function-align)**()<br>Aligns the bitstream to the next integer boundary.  |
+| protected void | **[Reset](Classes/class_bit_stream_writer.md#function-reset)**()<br>Resets the bitstream to the beginning. Should not be called by a developer.  |
+| bool | **[WritePacked](Classes/class_bit_stream_writer.md#function-writepacked)**(bool value)<br>Writes a boolean value to the bitstream and returns the original value.  |
+| bool | **[WritePacked](Classes/class_bit_stream_writer.md#function-writepacked)**(float value) |
+| bool | **[WritePacked](Classes/class_bit_stream_writer.md#function-writepacked)**(string value) |
+| bool | **[WritePacked](Classes/class_bit_stream_writer.md#function-writepacked)**(Object object) |
+| bool | **[WriteUInt](Classes/class_bit_stream_writer.md#function-writeuint)**(int value, int bits) |
+| bool | **[WriteSInt](Classes/class_bit_stream_writer.md#function-writesint)**(int value, int bits) |
+| bool | **[WriteAligned](Classes/class_bit_stream_writer.md#function-writealigned)**(int value)<br>Write a value to the RPC stream, aligns to next int and writes the value.  |
+| bool | **[WriteAligned](Classes/class_bit_stream_writer.md#function-writealigned)**(bool value) |
+| bool | **[WriteAligned](Classes/class_bit_stream_writer.md#function-writealigned)**(Class value) |
+| bool | **[WriteAligned](Classes/class_bit_stream_writer.md#function-writealigned)**(string value) |
 
 ## Public Attributes
 
 |                | Name           |
 | -------------- | -------------- |
 | public int | **[m_BitIndex](Classes/class_bit_stream_writer.md#variable-m-bitindex)**  |
-| public Serializer | **[ctx](Classes/class_bit_stream_writer.md#variable-ctx)**  |
+| protected Serializer | **[m_Context](Classes/class_bit_stream_writer.md#variable-m-context)**  |
 | public int | **[m_Working](Classes/class_bit_stream_writer.md#variable-m-working)**  |
 | public int | **[m_WorkingIndex](Classes/class_bit_stream_writer.md#variable-m-workingindex)**  |
 
@@ -46,7 +55,7 @@ This class is responsible for writing data into a bitstream. It provides methods
 
 ```cpp
 void BitStreamWriter(
-    Serializer _ctx
+    Serializer context =NULL
 )
 ```
 
@@ -69,7 +78,7 @@ GetIndex returns the current bit index.
 ### function Align
 
 ```cpp
-void Align()
+bool Align()
 ```
 
 Aligns the bitstream to the next integer boundary. 
@@ -77,10 +86,18 @@ Aligns the bitstream to the next integer boundary.
 Generally, this function is only called at the end of a message to ensure proper alignment. 
 
 
-### function WriteBool
+### function Reset
 
 ```cpp
-bool WriteBool(
+protected void Reset()
+```
+
+Resets the bitstream to the beginning. Should not be called by a developer. 
+
+### function WritePacked
+
+```cpp
+bool WritePacked(
     bool value
 )
 ```
@@ -92,21 +109,39 @@ Writes a boolean value to the bitstream and returns the original value.
   * **value** The boolean value to be written to the bitstream. 
 
 
-**Return**: The original boolean value that was written to the bitstream. 
+**Return**: Returns true if the operation is successful, false otherwise. 
 
-### function WriteObject
+### function WritePacked
 
 ```cpp
-bool WriteObject(
+bool WritePacked(
+    float value
+)
+```
+
+
+### function WritePacked
+
+```cpp
+bool WritePacked(
+    string value
+)
+```
+
+
+### function WritePacked
+
+```cpp
+bool WritePacked(
     Object object
 )
 ```
 
 
-### function WriteUint
+### function WriteUInt
 
 ```cpp
-bool WriteUint(
+bool WriteUInt(
     int value,
     int bits
 )
@@ -121,15 +156,65 @@ bool WriteUint(
 
 **Return**: Returns true if the operation is successful, false otherwise. 
 
-WriteUint is a function that writes an unsigned integer value to a bitstream.
+WriteUInt is a function that writes an unsigned integer value to a bitstream.
 
 
-### function writeSInt
+### function WriteSInt
 
 ```cpp
-void writeSInt(
+bool WriteSInt(
     int value,
     int bits
+)
+```
+
+
+**Parameters**: 
+
+  * **value** The integer value to be written to the bitstream. 
+  * **bits** The number of bits to be written from the value to the bitstream. 
+
+
+**Return**: Returns true if the operation is successful, false otherwise. 
+
+WriteSInt is a function that writes a signed integer value to a bitstream. 
+
+
+### function WriteAligned
+
+```cpp
+bool WriteAligned(
+    int value
+)
+```
+
+Write a value to the RPC stream, aligns to next int and writes the value. 
+
+**Note**: Aligned writes should not be used unless needed such as deep serialization however no compression takes place with these style of writes. Use sparingly. 
+
+### function WriteAligned
+
+```cpp
+bool WriteAligned(
+    bool value
+)
+```
+
+
+### function WriteAligned
+
+```cpp
+bool WriteAligned(
+    Class value
+)
+```
+
+
+### function WriteAligned
+
+```cpp
+bool WriteAligned(
+    string value
 )
 ```
 
@@ -143,10 +228,10 @@ public int m_BitIndex;
 ```
 
 
-### variable ctx
+### variable m_Context
 
 ```cpp
-public Serializer ctx;
+protected Serializer m_Context;
 ```
 
 
@@ -166,4 +251,4 @@ public int m_WorkingIndex = 0;
 
 -------------------------------
 
-Updated on 2023-08-10 at 22:33:44 -0500
+Updated on 2023-08-21 at 22:55:10 -0500
