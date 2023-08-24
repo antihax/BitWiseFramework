@@ -85,7 +85,7 @@ class BitStreamWriter {
 	bool WritePacked(string value) {
 		// If you need to send more, you need to rethink your design.
 		if (value.Length() > 1023) {
-			Print("String too long, must be under 1023 bytes.");
+			Error("String too long, must be under 1023 bytes.");
 			return false;
 		}
 		// Write length of string, 10 bit.

@@ -7,6 +7,28 @@
  * To view a copy of this license, visit https://creativecommons.org/licenses/by-nd/4.0/
  *
  */
+#ifdef BITWISEDEBUG
+void BITWISE_SERVERTEST1(PlayerIdentity sender, ParamsReadContext ctx) {
+	Print("BITWISE_SERVERTEST1");
+	test_Endpoints();
+}
+void BITWISE_SERVERTEST2(PlayerIdentity sender, ParamsReadContext ctx) {
+	Print("BITWISE_SERVERTEST2");
+	test_Endpoints();
+}
+void BITWISE_SERVERTEST3(PlayerIdentity sender, ParamsReadContext ctx) {
+	Print("BITWISE_SERVERTEST3");
+	test_Endpoints();
+}
+void BITWISE_SERVERTEST4(PlayerIdentity sender, ParamsReadContext ctx) {
+	Print("BITWISE_SERVERTEST4");
+	test_Endpoints();
+}
+
+void BITWISE_CLIENTTEST1(PlayerIdentity sender, ParamsReadContext ctx) {
+	Print("BITWISE_CLIENTTEST1");
+}
+#endif
 
 modded class DayZGame {
 	void DayZGame() {
@@ -16,8 +38,12 @@ modded class DayZGame {
 		GetBitWiseManager().RegisterEndpoint("BITWISE", "servertest2");
 		GetBitWiseManager().RegisterEndpoint("BITWISE", "servertest3");
 		GetBitWiseManager().RegisterEndpoint("BITWISE", "servertest4");
-		GetBitWiseManager().RegisterEndpoint("BITWISE", "servertest1");
-#endif
+		GetBitWiseManager().ConnectEndpoint("BITWISE", "clienttest1", ScriptCaller.Create(BITWISE_CLIENTTEST1));
+#else
+		GetBitWiseManager().ConnectEndpoint("BITWISE", "servertest1", ScriptCaller.Create(BITWISE_SERVERTEST1));
+		GetBitWiseManager().ConnectEndpoint("BITWISE", "servertest2", ScriptCaller.Create(BITWISE_SERVERTEST2));
+		GetBitWiseManager().ConnectEndpoint("BITWISE", "servertest3", ScriptCaller.Create(BITWISE_SERVERTEST3));
+		GetBitWiseManager().ConnectEndpoint("BITWISE", "servertest4", ScriptCaller.Create(BITWISE_SERVERTEST4));
 #endif
 	}
 

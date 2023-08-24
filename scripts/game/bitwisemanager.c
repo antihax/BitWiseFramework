@@ -40,7 +40,6 @@ class BitWiseManager {
 		m_PendingEndpoints = new map<string, ref ScriptCaller>();
 #endif
 		m_EndpointIndex = BitWiseRPC.MAX_BITWISE_RPC; // Jump over our endpoints
-
 		m_RPCTableRPC = BitWiseScriptRPC.NewFromID(BitWiseRPC.RPCTable);
 	}
 
@@ -86,7 +85,7 @@ class BitWiseManager {
 
 	int ConnectEndpoint(string mod, string keyword, ScriptCaller caller) {
 		if (!caller) {
-			Print("BitWiseManager::RegisterEndpoint: caller is NULL.");
+			Error("BitWiseManager::RegisterEndpoint: caller is NULL.");
 			return -1;
 		}
 		int index = -1;
@@ -94,12 +93,14 @@ class BitWiseManager {
 		index = RegisterEndpoint(mod, keyword);
 		// Register endpoint if it doesn't exist or get the ID
 		m_Endpoints.Insert(index, caller);
+
 #else
 		// Connect the caller to the endpoint or add to the pending list
 		if (m_EndpointNames.Find(EndPointName(mod, keyword), index))
 			m_Endpoints.Insert(index, caller);
 		else
 			m_PendingEndpoints.Insert(EndPointName(mod, keyword), caller);
+
 #endif
 		return index;
 	}
@@ -118,7 +119,7 @@ class BitWiseManager {
 	void _OnRPC(PlayerIdentity sender, Object target, ParamsReadContext ctx) {
 		int index;
 		if (!ctx.Read(index)) {
-			Print("BitWiseManager::OnRPC: Failed to read index.");
+			Error("BitWiseManager::OnRPC: Failed to read index.");
 			return;
 		}
 		switch (index) {
@@ -135,7 +136,7 @@ class BitWiseManager {
 
 		int count;
 		if (!br.ReadUInt(count, BITWISE_RPC_SIZE)) {
-			Print("BitWiseManager::RPC_RPCTable: Failed to read count.");
+			Error("BitWiseManager::RPC_RPCTable: Failed to read count.");
 			return;
 		}
 		int bits = BitWiseHelpers.BitSize(count + BitWiseRPC.MAX_BITWISE_RPC);
@@ -143,12 +144,12 @@ class BitWiseManager {
 			string name;
 			int index;
 			if (!br.ReadPacked(name)) {
-				Print("BitWiseManager::RPC_RPCTable: Failed to read name.");
+				Error("BitWiseManager::RPC_RPCTable: Failed to read name.");
 				return;
 			}
 
 			if (!br.ReadUInt(index, bits)) {
-				Print("BitWiseManager::RPC_RPCTable: Failed to read index.");
+				Error("BitWiseManager::RPC_RPCTable: Failed to read index.");
 				return;
 			}
 

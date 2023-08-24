@@ -32,14 +32,6 @@ class BitWiseHelpers {
 		return result;
 	}
 
-	/// @brief Helper function to dump the stack to a string with a message.
-	/// @param str Message before the stack dump.
-	static void WarningWithStack(string message) {
-		string str;
-		DumpStackString(str);
-		Print("BitStream: " + message + "\n" + str);
-	}
-
 	/**
 	 * @brief Determine how many bits are used by a value
 	 * @param n The value to check.

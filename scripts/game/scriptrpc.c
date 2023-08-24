@@ -28,13 +28,13 @@ class BitWiseScriptRPC : BitStreamWriter {
 	static BitWiseScriptRPC New(string mod, string keyword) {
 		auto g = GetBitWiseManager();
 		if (!g) {
-			Print("BitWiseScriptRPC::New - BitWiseManager not available yet");
+			Error("BitWiseScriptRPC::New - BitWiseManager not available yet");
 			return NULL;
 		}
 
 		int id = g.GetIndexForKeyword(mod, keyword);
 		if (id <= 0) {
-			Print("BitWiseScriptRPC::New - index not found for mod " + mod + " and keyword " + keyword);
+			Error("BitWiseScriptRPC::New - index not found for mod " + mod + " and keyword " + keyword);
 			return NULL;
 		}
 
