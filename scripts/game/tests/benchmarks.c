@@ -1,4 +1,3 @@
-
 #ifdef BITWISEDEBUG
 class BitWiseBenchmarks {
 	ref ScriptInvoker ReusetestInvoker;
@@ -7,15 +6,12 @@ class BitWiseBenchmarks {
 	void BitWiseBenchmarks() {
 	}
 	void Run() {
-
 		ReusetestCaller = ScriptCaller.Create(CallMeMaybe);
 		ReusetestInvoker = new ScriptInvoker();
 		ReusetestInvoker.Insert(CallMeMaybe);
 
 		float time;
 		int i;
-		EnProfiler.Enable(true, true);
-		EnProfiler.SetTimeResolution(1000);
 
 		for (i = 0; i < 1000000; ++i) {
 			BenchmarkScriptInvoker();
@@ -46,8 +42,6 @@ class BitWiseBenchmarks {
 		}
 		time = EnProfiler.GetTimeOfFunc("BenchmarkReuseScriptInvoke", Type(), true);
 		Print("BenchmarkReuseScriptInvoke took " + time.ToString());
-
-		EnProfiler.Enable(false, true);
 	}
 
 	void CallMeMaybe(int number) {

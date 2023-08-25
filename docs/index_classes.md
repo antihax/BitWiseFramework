@@ -13,9 +13,10 @@ title: Classes
 * **class [BitWiseHelpers](Classes/class_bit_wise_helpers.md)** <br>A framework for creating RPCs (Remote Procedure Calls) in DayZ in an optimized way to minimize bandwidth usage and resolve collisions. 
 * **class [BitWiseManager](Classes/class_bit_wise_manager.md)** 
 * **class [BitWiseScriptRPC](Classes/class_bit_wise_script_r_p_c.md)** 
+* **class [DayZGame](Classes/class_day_z_game.md)** 
 
 
 
 -------------------------------
 
-Updated on 2023-08-23 at 19:58:54 -0500
+Updated on 2023-08-25 at 15:23:18 -0500

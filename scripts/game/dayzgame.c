@@ -34,6 +34,7 @@ modded class DayZGame {
 	void DayZGame() {
 #ifdef BITWISEDEBUG
 #ifdef SERVER
+
 		GetBitWiseManager().RegisterEndpoint("BITWISE", "servertest1");
 		GetBitWiseManager().RegisterEndpoint("BITWISE", "servertest2");
 		GetBitWiseManager().RegisterEndpoint("BITWISE", "servertest3");
@@ -44,6 +45,7 @@ modded class DayZGame {
 		GetBitWiseManager().ConnectEndpoint("BITWISE", "servertest2", ScriptCaller.Create(BITWISE_SERVERTEST2));
 		GetBitWiseManager().ConnectEndpoint("BITWISE", "servertest3", ScriptCaller.Create(BITWISE_SERVERTEST3));
 		GetBitWiseManager().ConnectEndpoint("BITWISE", "servertest4", ScriptCaller.Create(BITWISE_SERVERTEST4));
+#endif
 #endif
 	}
 
@@ -61,8 +63,8 @@ modded class DayZGame {
 		int time = TickCount(prev);
 		int estimatedMil = (int)(time / 10000.0);
 		Print("RPC: " + rpc_type + " took " + time + " ticks (" + estimatedMil + "ms) " + EnumTools.EnumToString(ERPCs, rpc_type));
-	}
 #endif
+	}
 
 	void ~DayZGame() {}
 }

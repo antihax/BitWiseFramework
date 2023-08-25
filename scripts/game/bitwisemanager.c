@@ -36,11 +36,12 @@ class BitWiseManager {
 	void BitWiseManager() {
 		m_Endpoints = new map<int, ref ScriptCaller>();
 		m_EndpointNames = new map<string, int>();
-#ifndef SERVER
-		m_PendingEndpoints = new map<string, ref ScriptCaller>();
-#endif
+#ifdef SERVER
 		m_EndpointIndex = BitWiseRPC.MAX_BITWISE_RPC; // Jump over our endpoints
 		m_RPCTableRPC = BitWiseScriptRPC.NewFromID(BitWiseRPC.RPCTable);
+#else
+		m_PendingEndpoints = new map<string, ref ScriptCaller>();
+#endif
 	}
 
 	void ~BitWiseManager() {
@@ -93,14 +94,12 @@ class BitWiseManager {
 		index = RegisterEndpoint(mod, keyword);
 		// Register endpoint if it doesn't exist or get the ID
 		m_Endpoints.Insert(index, caller);
-
 #else
 		// Connect the caller to the endpoint or add to the pending list
 		if (m_EndpointNames.Find(EndPointName(mod, keyword), index))
 			m_Endpoints.Insert(index, caller);
 		else
 			m_PendingEndpoints.Insert(EndPointName(mod, keyword), caller);
-
 #endif
 		return index;
 	}
