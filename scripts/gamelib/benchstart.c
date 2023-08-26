@@ -9,5 +9,12 @@
 		EnProfiler.SetTimeResolution(1000);
 	}
 }
+
+class ProfileData {
+	int count;
+	float time;
+	string name;
+}
+
 #endif
 #endif

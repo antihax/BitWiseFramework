@@ -11,16 +11,18 @@
 #define BITWISEFRAMEWORK
 static const int SIZE_OF_INT_BITS = 32;
 static const int RPC_ANTIHAX_BITWISE = -1456746571;
-/// @brief  A framework for creating RPCs (Remote Procedure Calls) in DayZ in an optimized way to minimize bandwidth usage and resolve collisions.
-///
-/// @details This framework is designed to be used by modders to create RPCs in DayZ.
 
-/// @brief Helper functions for the RPC framework held within a namespace to avoid collisions with other mods.
+/**
+ * @brief A class that contains helper functions for bitwise operations.
+ */
 class BitWiseHelpers {
 
-	/// @brief Binary representation of the value, useful for debugging.
-	/// @param value
-	/// @return string of the value in binary.
+	/**
+	 * Returns the binary representation of an integer value as a string.
+	 *
+	 * @param value The integer value to be converted to binary.
+	 * @return The binary representation of the integer value as a string.
+	 */
 	static string BitRepresentation(int value) {
 		string result = "";
 		for (int i = 0; i < 32; ++i) {
@@ -33,11 +35,11 @@ class BitWiseHelpers {
 	}
 
 	/**
-	 * @brief Determine how many bits are used by a value
-	 * @param n The value to check.
-	 * @return The number of bits used.
+	 * Calculates the number of bits required to represent a given integer.
+	 *
+	 * @param n The integer to calculate the number of bits for.
+	 * @return The number of bits required to represent the given integer.
 	 */
-
 	static int BitSize(int n) {
 		int bits = 0;
 		while (n != 0) {
@@ -45,6 +47,53 @@ class BitWiseHelpers {
 			bits++;
 		}
 		return bits;
+	}
+
+	/**
+	 * Converts float to float bits in an integer.
+	 *
+	 * @param value The float value to be converted.
+	 * @return The integer value of the given float.
+	 */
+	static int FloatToInt(float value) {
+		int v[1];
+		float f[1] = {value};
+		copyarray(v, f);
+		return v[0];
+	}
+
+	/**
+	 * Converts integer float bits to float.
+	 *
+	 * @param value The integer value to be converted.
+	 * @return The float value of the given integer.
+	 */
+	static float IntToFloat(int value) {
+		float f[1];
+		int v[1] = {value};
+		copyarray(f, v);
+		return f[0];
+	}
+
+	/**
+	 * Converts float to half-float stored as int.
+	 *
+	 * @param fi The float value to be converted.
+	 * @return The half value of the given float.
+	 */
+	static int FloatToHalf(float fi) {
+		int v = FloatToInt(fi);
+		return ((v & 0x80000000) >> 16) | (((v & 0x7F800000) - 0x38000000) >> 13) | ((v & 0x007FFFFF) >> 13);
+	}
+
+	/**
+	 * Converts half-float stored as int to float.
+	 *
+	 * @param h The half value to be converted.
+	 * @return The float value of the given half.
+	 */
+	static float HalfToFloat(int h) {
+		return IntToFloat(((h & 0x8000) << 16) | (((h & 0x7C00) + 0x1C000) << 13) | ((h & 0x03FF) << 13));
 	}
 }
 

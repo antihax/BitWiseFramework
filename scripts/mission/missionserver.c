@@ -1,14 +1,9 @@
 #ifdef SERVER
-#ifdef BITWISEDEBUG
-class ProfileData {
-	int count;
-	float time;
-	string name;
-}
-#endif // BITWISEDEBUG
 
 modded class MissionServer {
-	// Send RPC table to client very early
+	/**
+	 * @brief Overrides the OnClientPrepareEvent method to send the RPCTable to the player's identity.
+	 */
 	override void OnClientPrepareEvent(PlayerIdentity identity, out bool useDB, out vector pos, out float yaw, out int preloadTimeout) {
 		GetBitWiseManager()._SendRPCTable(identity);
 		super.OnClientPrepareEvent(identity, useDB, pos, yaw, preloadTimeout);
@@ -16,11 +11,9 @@ modded class MissionServer {
 
 #ifdef BITWISEDEBUG
 	override void OnInit() {
-
 		auto b = BitWiseBenchmarks();
 		b.Run();
 		test_Bitstream();
-
 		super.OnInit();
 	}
 

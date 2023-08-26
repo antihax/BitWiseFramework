@@ -22,6 +22,11 @@ class BitStreamWriter {
 	private int m_Working; // The current integer we are packing to.
 	private int m_WorkingIndex = 0;
 
+	/**
+	 * @brief Initializes a BitStreamWriter object.
+	 * @param context A pointer to a Serializer object.
+	 * @return void
+	 */
 	void BitStreamWriter(Serializer context = NULL) {
 		m_Context = context;
 		m_BitIndex = 0;
@@ -29,8 +34,10 @@ class BitStreamWriter {
 
 	void ~BitStreamWriter() {
 	}
-
-	/// GetIndex returns the current bit index.
+	/**
+	 * Returns the current bit index.
+	 * @return The current bit index.
+	 */
 	int GetIndex() {
 		return m_BitIndex;
 	}
@@ -38,7 +45,10 @@ class BitStreamWriter {
 	/**
 	 * @brief Aligns the bitstream to the next integer boundary.
 	 *
-	 * Generally, this function is only called at the end of a message to ensure proper alignment.
+	 * If the current bit index is not aligned with the integer boundary, the working integer is written to the bitstream
+	 * and the bit index is incremented to the next integer boundary.
+	 *
+	 * @return true if the bitstream is successfully aligned, false otherwise.
 	 */
 	bool Align() {
 		// If we need to align, write the working integer to the bitstream.
@@ -61,74 +71,12 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * @brief Writes a boolean value to the bitstream and returns the original value.
-	 *
-	 * @param value The boolean value to be written to the bitstream.
-	 * @return Returns true if the operation is successful, false otherwise.
+	 * Writes an unsigned integer value to the bitstream.
+	 * @param value The integer value to write.
+	 * @param bits The number of bits to use to represent the integer value.
+	 * @return Returns true if the write operation was successful, false otherwise.
 	 */
 
-	bool WritePacked(bool value) {
-		return WriteUInt(!!value, 1); // Because a bool is an int.
-	}
-
-	bool WritePacked(float value) {
-		// Write the float as an int.
-		int intVal = (int)value;
-		return WriteUInt(intVal, 32);
-	}
-
-	/***
-	 * @brief Writes a string to the bitstream. This is an expensive call for large strings. You should avoid sending strings or use WriteAligned.
-	 * @param s The string to be written to the bitstream.
-	 * @return Returns true if the operation is successful, false otherwise.
-	 */
-	bool WritePacked(string value) {
-		// If you need to send more, you need to rethink your design.
-		if (value.Length() > 1023) {
-			Error("String too long, must be under 1023 bytes.");
-			return false;
-		}
-		// Write length of string, 10 bit.
-		if (!WriteUInt(value.Length(), 10))
-			return false;
-
-		// Write bytes, inclusive of UTF-8.
-		for (int i = 0; i < value.Length(); ++i) {
-			if (!WriteUInt(value.Get(i).ToAscii(), 8))
-				return false;
-		}
-
-		return true;
-	}
-
-	/***
-	 * @brief Writes an object by network ID to the bitstream.
-	 * @param object The object to be written to the bitstream.
-	 * @return Returns true if the operation is successful, false otherwise.
-	 */
-	bool WritePacked(Object object) {
-		int high, low;
-		if (!object)
-			return false;
-
-		// Get the network ID.
-		object.GetNetworkID(high, low);
-		if (!WriteSInt(high, 32))
-			return false;
-		if (!WriteSInt(low, 32))
-			return false;
-		return true;
-	}
-
-	/**
-	 * WriteUInt is a function that writes an unsigned integer value to a bitstream.
-	 *
-	 * @param value The integer value to be written to the bitstream.
-	 * @param bits The number of bits to be written from the value to the bitstream.
-	 *
-	 * @return Returns true if the operation is successful, false otherwise.
-	 *
-	 */
 	bool WriteUInt(int value, int bits) {
 		if (bits <= 0 || bits > SIZE_OF_INT_BITS) {
 			return false;
@@ -181,6 +129,113 @@ class BitStreamWriter {
 		return ok;
 	}
 
+	/**
+	 * Writes a half-precision vector to the bitstream. Useful when precision can be sacrificed for bandwidth.
+	 *
+	 * @param value The value to write.
+	 * @return True if the write was successful, false otherwise.
+	 */
+	bool WriteHalfVector(vector value) {
+		if (!WriteUInt(BitWiseHelpers.FloatToHalf(value[0]), 16))
+			return false;
+		if (!WriteUInt(BitWiseHelpers.FloatToHalf(value[1]), 16))
+			return false;
+		if (!WriteUInt(BitWiseHelpers.FloatToHalf(value[2]), 16))
+			return false;
+		return true;
+	}
+
+	/**
+	 * Writes a half-precision floating-point value to the bitstream. Useful when precision can be sacrificed for bandwidth.
+	 *
+	 * @param value The value to write.
+	 * @return True if the write was successful, false otherwise.
+	 */
+	bool WriteHalfFloat(float value) {
+		return WriteUInt(BitWiseHelpers.FloatToHalf(value), 16);
+	}
+
+	/**
+	 * Writes a boolean value to the bitstream.
+	 * @param value The boolean value to write.
+	 * @return True if the value was successfully written, false otherwise.
+	 */
+	bool WritePacked(bool value) {
+		return WriteUInt(!!value, 1); // Because a bool is an int.
+	}
+
+	/**
+	 * Writes a float value as an int to the bitstream.
+	 *
+	 * @param value The float value to be written.
+	 * @return True if the write operation was successful, false otherwise.
+	 */
+	bool WritePacked(float value) {
+		// Write the float as an int.
+		return WriteUInt(BitWiseHelpers.FloatToInt(value), 32);
+	}
+
+	/**
+	 * Writes a vector value to the bitstream.
+	 *
+	 * @param value The vector value to be written.
+	 * @return True if the write operation was successful, false otherwise.
+	 */
+	bool WritePacked(vector value) {
+		if (!WriteUInt(BitWiseHelpers.FloatToInt(value[0]), 32))
+			return false;
+		if (!WriteUInt(BitWiseHelpers.FloatToInt(value[1]), 32))
+			return false;
+		if (!WriteUInt(BitWiseHelpers.FloatToInt(value[2]), 32))
+			return false;
+		return true;
+	}
+
+	/**
+	 * Writes a packed string to the bitstream.
+	 *
+	 * @param value The string to write.
+	 * @return True if the string was successfully written, false otherwise.
+	 */
+	bool WritePacked(string value) {
+		// If you need to send more, you need to rethink your design.
+		if (value.Length() > 1023) {
+			Error("String too long, must be under 1023 bytes.");
+			return false;
+		}
+		// Write length of string, 10 bit.
+		if (!WriteUInt(value.Length(), 10))
+			return false;
+
+		// Write bytes, inclusive of UTF-8.
+		for (int i = 0; i < value.Length(); ++i) {
+			if (!WriteUInt(value.Get(i).ToAscii(), 8))
+				return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Writes a packed object to the bitstream.
+	 *
+	 * @param object The object to write.
+	 * @return True if the object was successfully written, false otherwise.
+	 */
+	bool WritePacked(Object object) {
+		int high, low;
+		if (!object)
+			return false;
+
+		// Get the network ID.
+		object.GetNetworkID(high, low);
+		if (!WriteSInt(high, 32))
+			return false;
+		if (!WriteSInt(low, 32))
+			return false;
+		return true;
+	}
+
 	/*********** ALIGNED WRITING ***********/
 	/**
 	 * @note Aligned writes should not be used unless needed such as deep serialization
@@ -188,20 +243,32 @@ class BitStreamWriter {
 	 */
 
 	/**
-	 * @brief Write a value to the RPC stream, aligns to next int and writes the value.
+	 * Writes an integer value to the bitstream, aligning the bitstream first.
+	 *
+	 * @param value The integer value to write to the bitstream.
+	 * @return True if the write was successful, false otherwise.
 	 */
 	bool WriteAligned(int value) {
 		Align();
 		return m_Context.Write(value);
 	}
+
+	/**
+	 * Writes a boolean value to the bitstream in an aligned manner.
+	 * @param value The boolean value to be written.
+	 * @return Returns true if the write operation was successful, false otherwise.
+	 */
 	bool WriteAligned(bool value) {
 		Align();
 		return m_Context.Write(!!value);
 	}
-	bool WriteAligned(Class value) {
-		Align();
-		return m_Context.Write(value);
-	}
+
+	/**
+	 * Writes a string value to the bitstream in an aligned manner.
+	 *
+	 * @param value The string value to be written.
+	 * @return Returns true if the write operation was successful, false otherwise.
+	 */
 	bool WriteAligned(string value) {
 		Align();
 		return m_Context.Write(value);

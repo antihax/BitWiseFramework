@@ -15,6 +15,9 @@
  * It provides methods to read various types of data (like integers, floats, etc.) from the bitstream.
  */
 
+/**
+ * @brief A class for reading bits from a stream.
+ */
 class BitStreamReader {
 	private int m_BitIndex = 0;
 	private Serializer m_Context;
@@ -22,9 +25,9 @@ class BitStreamReader {
 	private int m_WorkingIndex;
 
 	/**
-	 *
+	 * @brief Initializes a BitStreamReader object with the given Serializer context.
+	 * @param _ctx The Serializer context to use for reading bits.
 	 */
-
 	void BitStreamReader(Serializer _ctx) {
 		m_Context = _ctx;
 		m_BitIndex = 0;
@@ -34,14 +37,32 @@ class BitStreamReader {
 	void ~BitStreamReader() {
 	}
 
+	/**
+	 * Returns the current bit index.
+	 *
+	 * @return The current bit index.
+	 */
 	int GetIndex() {
 		return m_BitIndex;
 	}
 
+	/**
+	 * Reads a boolean value from the bitstream.
+	 * @param[out] value - The boolean value read from the bitstream.
+	 * @return True if the boolean value was successfully read, false otherwise.
+	 */
 	bool ReadBool(out bool value) {
 		return ReadUInt(value, 1);
 	}
 
+	/**
+	 * Reads an unsigned integer value from the bitstream.
+	 *
+	 * @param[out] value - The integer value read from the bitstream.
+	 * @param[in] bits - The number of bits to read from the bitstream.
+	 *
+	 * @return true if the value was successfully read, false otherwise.
+	 */
 	bool ReadUInt(out int value, int bits) {
 		if (bits > SIZE_OF_INT_BITS || bits <= 0) {
 			return false;
@@ -83,6 +104,14 @@ class BitStreamReader {
 		return true;
 	}
 
+	/**
+	 * Reads a signed integer value from the bitstream.
+	 *
+	 * @param[out] value The integer value read from the bitstream.
+	 * @param[in] bits The number of bits to read for the integer value.
+	 *
+	 * @return True if the integer value was successfully read, false otherwise.
+	 */
 	bool ReadSInt(out int value, int bits) {
 		bool isNegative;
 		if (!ReadBool(isNegative))
@@ -98,8 +127,20 @@ class BitStreamReader {
 	}
 
 	/**
+	 * Reads a half-precision floating-point value from the bit stream.
+	 * @param[out] value The half-precision floating-point value read from the bit stream.
+	 * @return True if the read operation was successful, false otherwise.
+	 */
+	bool ReadHalfFloat(out float value) {
+		int v;
+		if (!ReadUInt(v, 16))
+			return false;
+		value = BitWiseHelpers.HalfToFloat(v);
+		return true;
+	}
+
+	/**
 	 * @brief Aligns the bitstream to the next integer boundary.
-	 *
 	 * Generally, this function is only called at the end of a message to ensure proper alignment.
 	 */
 	void Align() {
@@ -110,18 +151,43 @@ class BitStreamReader {
 		}
 	}
 
+	/**
+	 * Reads a packed boolean value from the bitstream.
+	 * @param[out] value The boolean value to be read.
+	 * @return True if the value was read successfully, false otherwise.
+	 */
 	bool ReadPacked(out bool value) {
 		return ReadBool(value);
 	}
 
+	/**
+	 * Reads a packed integer value from the bitstream.
+	 * @param[out] value The integer value read from the bitstream.
+	 * @return True if the integer value was successfully read, false otherwise.
+	 */
 	bool ReadPacked(out int value) {
 		return ReadSInt(value, 32);
 	}
 
+	/**
+	 * Reads a packed float value from the bitstream.
+	 * @param[out] value The float value read from the bitstream.
+	 * @return True if the value was successfully read, false otherwise.
+	 */
 	bool ReadPacked(out float value) {
-		return ReadSInt(value, 32);
+		int v;
+		if (!ReadUInt(v, 32))
+			return false;
+		value = BitWiseHelpers.IntToFloat(v);
+		return true;
 	}
 
+	/**
+	 * Reads a packed string from the bitstream.
+	 *
+	 * @param[out] value The string value read from the bitstream.
+	 * @return True if the string was successfully read, false otherwise.
+	 */
 	bool ReadPacked(out string value) {
 		int length;
 		if (!ReadUInt(length, 10))
@@ -139,18 +205,41 @@ class BitStreamReader {
 		return true;
 	}
 
+	/**
+	 * Reads an aligned integer value from the bitstream.
+	 * @param[out] value The integer value read from the bitstream.
+	 * @return True if the read operation was successful, false otherwise.
+	 */
 	bool ReadAligned(out int value) {
 		Align();
 		return m_Context.Read(value);
 	}
+
+	/**
+	 * Reads a boolean value from the bitstream.
+	 * @param[out] value - The boolean value to be read.
+	 * @return Returns true if the read operation was successful, false otherwise.
+	 */
 	bool ReadAligned(out bool value) {
 		Align();
 		return m_Context.Read(!!value);
 	}
+
+	/**
+	 * Reads a value from the bitstream in an aligned manner.
+	 * @param[out] value The value to be read from the bitstream.
+	 * @return Returns true if the value was successfully read, false otherwise.
+	 */
 	bool ReadAligned(out Class value) {
 		Align();
 		return m_Context.Read(value);
 	}
+
+	/**
+	 * Reads a string value from the bitstream in an aligned manner.
+	 * @param[out] value The string value read from the bitstream.
+	 * @return True if the read operation was successful, false otherwise.
+	 */
 	bool ReadAligned(out string value) {
 		Align();
 		return m_Context.Read(value);
