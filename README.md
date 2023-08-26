@@ -21,7 +21,7 @@ Widespread use of this is not expected, I just want something to save repeating 
 - Compatibility with CF and DayZ existing methods. This is not a replacement for either, can be mixed and matched with CF.
 - Pack data on a bit level. A boolean is sent as one bit, a value never to exceed 12 is sent as 5 bits, etc.
 - Performant code and minimal bandwidth.
-- Hoffman string coding, including UTF support.
+- String coding, including UTF support.
 - RPC registration assigning new `rpc_type` as needed to callback a function on receive. Synchronized between client and server.
 
 ## License

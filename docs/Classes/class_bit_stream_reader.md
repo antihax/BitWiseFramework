@@ -22,6 +22,8 @@ A class for reading bits from a stream.  [More...](#detailed-description)
 | bool | **[ReadSInt](Classes/class_bit_stream_reader.md#function-readsint)**(out int value, int bits) |
 | bool | **[ReadHalfFloat](Classes/class_bit_stream_reader.md#function-readhalffloat)**(out float value) |
 | void | **[Align](Classes/class_bit_stream_reader.md#function-align)**()<br>Aligns the bitstream to the next integer boundary. Generally, this function is only called at the end of a message to ensure proper alignment.  |
+| bool | **[ReadHalfVector](Classes/class_bit_stream_reader.md#function-readhalfvector)**(out vector value) |
+| bool | **[ReadPacked](Classes/class_bit_stream_reader.md#function-readpacked)**(out vector value) |
 | bool | **[ReadPacked](Classes/class_bit_stream_reader.md#function-readpacked)**(out bool value) |
 | bool | **[ReadPacked](Classes/class_bit_stream_reader.md#function-readpacked)**(out int value) |
 | bool | **[ReadPacked](Classes/class_bit_stream_reader.md#function-readpacked)**(out float value) |
@@ -173,6 +175,44 @@ void Align()
 ```
 
 Aligns the bitstream to the next integer boundary. Generally, this function is only called at the end of a message to ensure proper alignment. 
+
+### function ReadHalfVector
+
+```cpp
+bool ReadHalfVector(
+    out vector value
+)
+```
+
+
+**Parameters**: 
+
+  * **value** The vector to store the read value. 
+
+
+**Return**: True if the read was successful, false otherwise. 
+
+Reads a half vector from the bitstream. 
+
+
+### function ReadPacked
+
+```cpp
+bool ReadPacked(
+    out vector value
+)
+```
+
+
+**Parameters**: 
+
+  * **value** The vector value to be read. 
+
+
+**Return**: True if the value was successfully read, false otherwise. 
+
+Reads a packed vector value from the bitstream.
+
 
 ### function ReadPacked
 
@@ -358,4 +398,4 @@ public int m_WorkingIndex;
 
 -------------------------------
 
-Updated on 2023-08-25 at 22:01:36 -0500
+Updated on 2023-08-25 at 22:11:27 -0500
