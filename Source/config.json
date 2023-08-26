@@ -3,12 +3,12 @@
   "copyImages": true,
   "fileExt": "md",
   "filesFilter": [],
-  "folderClassesName": "Classes",
-  "folderExamplesName": "Examples",
-  "folderFilesName": "Files",
-  "folderGroupsName": "Modules",
-  "folderNamespacesName": "Namespaces",
-  "folderRelatedPagesName": "Pages",
+  "folderClassesName": "",
+  "folderExamplesName": "",
+  "folderFilesName": "",
+  "folderGroupsName": "",
+  "folderNamespacesName": "",
+  "folderRelatedPagesName": "",
   "foldersToGenerate": [
     "classes",
     "examples"
@@ -34,10 +34,10 @@
   "linkAndInlineCodeAsHTML": false,
   "linkLowercase": false,
   "linkSuffix": ".md",
-  "mainPageInRoot": false,
+  "mainPageInRoot": true,
   "mainPageName": "indexpage",
   "replaceUnderscoresInAnchors": true,
-  "sort": false,
+  "sort": true,
   "templateIndexClasses": "index_classes",
   "templateIndexExamples": "index_examples",
   "templateIndexFiles": "index_files",
@@ -54,5 +54,5 @@
   "templateKindPage": "kind_page",
   "templateKindStruct": "kind_class",
   "templateKindUnion": "kind_class",
-  "useFolders": true
+  "useFolders": false
 }

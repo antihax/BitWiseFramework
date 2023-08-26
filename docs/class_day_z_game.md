@@ -13,9 +13,9 @@ title: DayZGame
 
 |                | Name           |
 | -------------- | -------------- |
-| void | **[DayZGame](Classes/class_day_z_game.md#function-dayzgame)**() |
-| override void | **[OnRPC](Classes/class_day_z_game.md#function-onrpc)**(PlayerIdentity sender, Object target, int rpc_type, ParamsReadContext ctx) |
-| void | **[~DayZGame](Classes/class_day_z_game.md#function-~dayzgame)**() |
+| void | **[DayZGame](class_day_z_game.md#function-dayzgame)**() |
+| override void | **[OnRPC](class_day_z_game.md#function-onrpc)**(PlayerIdentity sender, Object target, int rpc_type, ParamsReadContext ctx) |
+| void | **[~DayZGame](class_day_z_game.md#function-~dayzgame)**() |
 
 ## Public Functions Documentation
 
@@ -47,4 +47,4 @@ void ~DayZGame()
 
 -------------------------------
 
-Updated on 2023-08-25 at 22:11:27 -0500
+Updated on 2023-08-26 at 11:48:46 -0500

@@ -140,18 +140,6 @@ class BitStreamReader {
 	}
 
 	/**
-	 * @brief Aligns the bitstream to the next integer boundary.
-	 * Generally, this function is only called at the end of a message to ensure proper alignment.
-	 */
-	void Align() {
-		// If we need to align, skip to next int.
-		if (m_BitIndex % SIZE_OF_INT_BITS != 0) {
-			++m_WorkingIndex;
-			m_BitIndex += m_BitIndex % SIZE_OF_INT_BITS;
-		}
-	}
-
-	/**
 	 * Reads a half vector from the bitstream.
 	 * @param[out] value The vector to store the read value.
 	 * @return True if the read was successful, false otherwise.
@@ -242,6 +230,17 @@ class BitStreamReader {
 			value += v.AsciiToString();
 		}
 		return true;
+	}
+
+	/**
+	 * Aligns the bitstream to the next integer boundary.
+	 */
+	void Align() {
+		// If we need to align, skip to next int.
+		if (m_BitIndex % SIZE_OF_INT_BITS != 0) {
+			++m_WorkingIndex;
+			m_BitIndex += m_BitIndex % SIZE_OF_INT_BITS;
+		}
 	}
 
 	/**

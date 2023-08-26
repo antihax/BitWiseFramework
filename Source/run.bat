@@ -5,7 +5,7 @@ mkdir p:\BitWiseFramework\docs\
 doxygen
 DayZInput.ps1
 rem call npx moxygen --anchors --output="p:\BitWiseFramework\docs\README.md" "p:\BitWiseFramework\Source\tempdocs\xml"
-doxybook2 --input=p:\BitWiseFramework\Source\tempdocs\xml --output=p:\BitWiseFramework\docs\ --config config.json
+doxybook2 --input=p:\BitWiseFramework\Source\tempdocs\xml --output=p:\BitWiseFramework\docs --config config.json
 
 set modpath=%DAYZ%%\!Workshop
 set srcpath=P:\BitWiseFramework
