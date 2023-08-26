@@ -152,6 +152,45 @@ class BitStreamReader {
 	}
 
 	/**
+	 * Reads a half vector from the bitstream.
+	 * @param[out] value The vector to store the read value.
+	 * @return True if the read was successful, false otherwise.
+	 */
+	bool ReadHalfVector(out vector value) {
+		float x, y, z;
+		if (!ReadHalfFloat(x))
+			return false;
+		if (!ReadHalfFloat(y))
+			return false;
+		if (!ReadHalfFloat(z))
+			return false;
+		value[0] = x;
+		value[1] = y;
+		value[2] = z;
+		return true;
+	}
+
+	/**
+	 * Reads a packed vector value from the bitstream.
+	 *
+	 * @param[out] value The vector value to be read.
+	 * @return True if the value was successfully read, false otherwise.
+	 */
+	bool ReadPacked(out vector value) {
+		float x, y, z;
+		if (!ReadPacked(x))
+			return false;
+		if (!ReadPacked(y))
+			return false;
+		if (!ReadPacked(z))
+			return false;
+		value[0] = x;
+		value[1] = y;
+		value[2] = z;
+		return true;
+	}
+
+	/**
 	 * Reads a packed boolean value from the bitstream.
 	 * @param[out] value The boolean value to be read.
 	 * @return True if the value was read successfully, false otherwise.
