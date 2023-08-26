@@ -1,5 +1,6 @@
 ---
 title: BitStreamWriter
+summary: A class for writing bits from a stream. 
 
 ---
 
@@ -7,7 +8,7 @@ title: BitStreamWriter
 
 
 
- [More...](#detailed-description)
+A class for writing bits from a stream.  [More...](#detailed-description)
 
 Inherited by [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md)
 
@@ -17,20 +18,20 @@ Inherited by [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md)
 | -------------- | -------------- |
 | bool | **[Align](class_bit_stream_writer.md#function-align)**()<br>Aligns the bitstream to the next integer boundary.  |
 | void | **[BitStreamWriter](class_bit_stream_writer.md#function-bitstreamwriter)**(Serializer context =NULL)<br>Initializes a [BitStreamWriter](class_bit_stream_writer.md) object.  |
-| int | **[GetIndex](class_bit_stream_writer.md#function-getindex)**() |
+| int | **[GetIndex](class_bit_stream_writer.md#function-getindex)**()<br>Returns the current bit index.  |
 | protected void | **[Reset](class_bit_stream_writer.md#function-reset)**()<br>Resets the bitstream to the beginning. Should not be called by a developer.  |
-| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(int value) |
-| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(bool value) |
-| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(string value) |
-| bool | **[WriteHalfFloat](class_bit_stream_writer.md#function-writehalffloat)**(float value) |
-| bool | **[WriteHalfVector](class_bit_stream_writer.md#function-writehalfvector)**(vector value) |
-| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(bool value) |
-| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(float value) |
-| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(vector value) |
-| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(string value) |
-| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(Object object) |
-| bool | **[WriteSInt](class_bit_stream_writer.md#function-writesint)**(int value, int bits) |
-| bool | **[WriteUInt](class_bit_stream_writer.md#function-writeuint)**(int value, int bits) |
+| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(int value)<br>[AVOID] Writes an integer value to the bitstream, aligning the bitstream first.  |
+| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(bool value)<br>[AVOID] Writes a boolean value to the bitstream in an aligned manner.  |
+| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(string value)<br>[AVOID] Writes a string value to the bitstream in an aligned manner.  |
+| bool | **[WriteHalfFloat](class_bit_stream_writer.md#function-writehalffloat)**(float value)<br>Writes a half-precision floating-point value [16 bits] to the bitstream. Useful when precision can be sacrificed for bandwidth.  |
+| bool | **[WriteHalfVector](class_bit_stream_writer.md#function-writehalfvector)**(vector value)<br>Writes a half-precision vector to the bitstream. Useful when precision can be sacrificed for bandwidth.  |
+| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(bool value)<br>Writes a boolean value [1 bit] to the bitstream.  |
+| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(float value)<br>Writes a float value [32 bits] as an int to the bitstream.  |
+| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(vector value)<br>Writes a vector value [96 bits] to the bitstream.  |
+| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(string value)<br>Writes a packed string to the bitstream.  |
+| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(Object object)<br>Writes a packed object [64 bits] to the bitstream.  |
+| bool | **[WriteSInt](class_bit_stream_writer.md#function-writesint)**(int value, int bits)<br>WriteSInt is a function that writes a signed integer value to a bitstream.  |
+| bool | **[WriteUInt](class_bit_stream_writer.md#function-writeuint)**(int value, int bits)<br>Writes an unsigned integer value to the bitstream.  |
 | void | **[~BitStreamWriter](class_bit_stream_writer.md#function-~bitstreamwriter)**() |
 
 ## Public Attributes
@@ -48,6 +49,7 @@ Inherited by [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md)
 class BitStreamWriter;
 ```
 
+A class for writing bits from a stream. 
 
 This class is responsible for writing data into a bitstream. It provides methods to write various types of data (like integers, floats, etc.) into the bitstream. The data can then be read from the bitstream using a [BitStreamReader](class_bit_stream_reader.md). 
 
@@ -89,6 +91,7 @@ Initializes a [BitStreamWriter](class_bit_stream_writer.md) object.
 int GetIndex()
 ```
 
+Returns the current bit index. 
 
 **Return**: The current bit index. 
 
@@ -111,6 +114,7 @@ bool WriteAligned(
 )
 ```
 
+[AVOID] Writes an integer value to the bitstream, aligning the bitstream first. 
 
 **Parameters**: 
 
@@ -119,7 +123,7 @@ bool WriteAligned(
 
 **Return**: True if the write was successful, false otherwise. 
 
-**Note**: Aligned writes should not be used unless needed such as deep serialization however no compression takes place with these style of writes. Use sparingly. Writes an integer value to the bitstream, aligning the bitstream first.
+**Note**: Aligned writes should not be used unless needed such as deep serialization however no compression takes place with these style of writes. Use sparingly. 
 
 ### function WriteAligned
 
@@ -129,6 +133,7 @@ bool WriteAligned(
 )
 ```
 
+[AVOID] Writes a boolean value to the bitstream in an aligned manner. 
 
 **Parameters**: 
 
@@ -136,9 +141,6 @@ bool WriteAligned(
 
 
 **Return**: Returns true if the write operation was successful, false otherwise. 
-
-Writes a boolean value to the bitstream in an aligned manner. 
-
 
 ### function WriteAligned
 
@@ -148,6 +150,7 @@ bool WriteAligned(
 )
 ```
 
+[AVOID] Writes a string value to the bitstream in an aligned manner. 
 
 **Parameters**: 
 
@@ -155,9 +158,6 @@ bool WriteAligned(
 
 
 **Return**: Returns true if the write operation was successful, false otherwise. 
-
-Writes a string value to the bitstream in an aligned manner.
-
 
 ### function WriteHalfFloat
 
@@ -167,6 +167,7 @@ bool WriteHalfFloat(
 )
 ```
 
+Writes a half-precision floating-point value [16 bits] to the bitstream. Useful when precision can be sacrificed for bandwidth. 
 
 **Parameters**: 
 
@@ -174,9 +175,6 @@ bool WriteHalfFloat(
 
 
 **Return**: True if the write was successful, false otherwise. 
-
-Writes a half-precision floating-point value to the bitstream. Useful when precision can be sacrificed for bandwidth.
-
 
 ### function WriteHalfVector
 
@@ -186,6 +184,7 @@ bool WriteHalfVector(
 )
 ```
 
+Writes a half-precision vector to the bitstream. Useful when precision can be sacrificed for bandwidth. 
 
 **Parameters**: 
 
@@ -193,9 +192,6 @@ bool WriteHalfVector(
 
 
 **Return**: True if the write was successful, false otherwise. 
-
-Writes a half-precision vector to the bitstream. Useful when precision can be sacrificed for bandwidth.
-
 
 ### function WritePacked
 
@@ -205,6 +201,7 @@ bool WritePacked(
 )
 ```
 
+Writes a boolean value [1 bit] to the bitstream. 
 
 **Parameters**: 
 
@@ -212,9 +209,6 @@ bool WritePacked(
 
 
 **Return**: True if the value was successfully written, false otherwise. 
-
-Writes a boolean value to the bitstream. 
-
 
 ### function WritePacked
 
@@ -224,6 +218,7 @@ bool WritePacked(
 )
 ```
 
+Writes a float value [32 bits] as an int to the bitstream. 
 
 **Parameters**: 
 
@@ -231,9 +226,6 @@ bool WritePacked(
 
 
 **Return**: True if the write operation was successful, false otherwise. 
-
-Writes a float value as an int to the bitstream.
-
 
 ### function WritePacked
 
@@ -243,6 +235,7 @@ bool WritePacked(
 )
 ```
 
+Writes a vector value [96 bits] to the bitstream. 
 
 **Parameters**: 
 
@@ -250,9 +243,6 @@ bool WritePacked(
 
 
 **Return**: True if the write operation was successful, false otherwise. 
-
-Writes a vector value to the bitstream.
-
 
 ### function WritePacked
 
@@ -262,6 +252,7 @@ bool WritePacked(
 )
 ```
 
+Writes a packed string to the bitstream. 
 
 **Parameters**: 
 
@@ -269,9 +260,6 @@ bool WritePacked(
 
 
 **Return**: True if the string was successfully written, false otherwise. 
-
-Writes a packed string to the bitstream.
-
 
 ### function WritePacked
 
@@ -281,6 +269,7 @@ bool WritePacked(
 )
 ```
 
+Writes a packed object [64 bits] to the bitstream. 
 
 **Parameters**: 
 
@@ -288,9 +277,6 @@ bool WritePacked(
 
 
 **Return**: True if the object was successfully written, false otherwise. 
-
-Writes a packed object to the bitstream.
-
 
 ### function WriteSInt
 
@@ -301,6 +287,7 @@ bool WriteSInt(
 )
 ```
 
+WriteSInt is a function that writes a signed integer value to a bitstream. 
 
 **Parameters**: 
 
@@ -309,9 +296,6 @@ bool WriteSInt(
 
 
 **Return**: Returns true if the operation is successful, false otherwise. 
-
-WriteSInt is a function that writes a signed integer value to a bitstream. 
-
 
 ### function WriteUInt
 
@@ -322,6 +306,7 @@ bool WriteUInt(
 )
 ```
 
+Writes an unsigned integer value to the bitstream. 
 
 **Parameters**: 
 
@@ -330,9 +315,6 @@ bool WriteUInt(
 
 
 **Return**: Returns true if the write operation was successful, false otherwise. 
-
-Writes an unsigned integer value to the bitstream. 
-
 
 ### function ~BitStreamWriter
 
@@ -373,4 +355,4 @@ public int m_WorkingIndex = 0;
 
 -------------------------------
 
-Updated on 2023-08-26 at 11:48:46 -0500
+Updated on 2023-08-26 at 12:05:38 -0500

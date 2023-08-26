@@ -9,7 +9,7 @@ title: Classes
 
 
 * **class [BitStreamReader](class_bit_stream_reader.md)** <br>A class for reading bits from a stream. 
-* **class [BitStreamWriter](class_bit_stream_writer.md)** 
+* **class [BitStreamWriter](class_bit_stream_writer.md)** <br>A class for writing bits from a stream. 
 * **class [BitWiseHelpers](class_bit_wise_helpers.md)** <br>A class that contains helper functions for bitwise operations. 
 * **class [BitWiseManager](class_bit_wise_manager.md)** 
 * **class [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md)** 
@@ -19,4 +19,4 @@ title: Classes
 
 -------------------------------
 
-Updated on 2023-08-26 at 11:48:46 -0500
+Updated on 2023-08-26 at 12:05:38 -0500

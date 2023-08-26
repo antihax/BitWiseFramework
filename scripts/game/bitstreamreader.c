@@ -13,9 +13,7 @@
  *
  * This class is responsible for reading data into a bitstream.
  * It provides methods to read various types of data (like integers, floats, etc.) from the bitstream.
- */
 
-/**
  * @brief A class for reading bits from a stream.
  */
 class BitStreamReader {
@@ -38,8 +36,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Returns the current bit index.
-	 *
+	 * @brief Returns the current bit index.
 	 * @return The current bit index.
 	 */
 	int GetIndex() {
@@ -47,7 +44,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a boolean value from the bitstream.
+	 * @brief Reads a boolean value from the bitstream.
 	 * @param[out] value - The boolean value read from the bitstream.
 	 * @return True if the boolean value was successfully read, false otherwise.
 	 */
@@ -56,11 +53,9 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads an unsigned integer value from the bitstream.
-	 *
+	 * @brief Reads an unsigned integer value from the bitstream.
 	 * @param[out] value - The integer value read from the bitstream.
 	 * @param[in] bits - The number of bits to read from the bitstream.
-	 *
 	 * @return true if the value was successfully read, false otherwise.
 	 */
 	bool ReadUInt(out int value, int bits) {
@@ -105,11 +100,9 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a signed integer value from the bitstream.
-	 *
+	 * @brief Reads a signed integer value from the bitstream.
 	 * @param[out] value The integer value read from the bitstream.
 	 * @param[in] bits The number of bits to read for the integer value.
-	 *
 	 * @return True if the integer value was successfully read, false otherwise.
 	 */
 	bool ReadSInt(out int value, int bits) {
@@ -127,7 +120,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a half-precision floating-point value from the bit stream.
+	 * @brief Reads a half-precision floating-point value from the bit stream.
 	 * @param[out] value The half-precision floating-point value read from the bit stream.
 	 * @return True if the read operation was successful, false otherwise.
 	 */
@@ -140,7 +133,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a half vector from the bitstream.
+	 * @brief Reads a half vector from the bitstream.
 	 * @param[out] value The vector to store the read value.
 	 * @return True if the read was successful, false otherwise.
 	 */
@@ -159,8 +152,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a packed vector value from the bitstream.
-	 *
+	 * @brief Reads a packed vector value from the bitstream.
 	 * @param[out] value The vector value to be read.
 	 * @return True if the value was successfully read, false otherwise.
 	 */
@@ -179,7 +171,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a packed boolean value from the bitstream.
+	 * @brief Reads a packed boolean value from the bitstream.
 	 * @param[out] value The boolean value to be read.
 	 * @return True if the value was read successfully, false otherwise.
 	 */
@@ -188,7 +180,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a packed integer value from the bitstream.
+	 * @brief Reads a packed integer value from the bitstream.
 	 * @param[out] value The integer value read from the bitstream.
 	 * @return True if the integer value was successfully read, false otherwise.
 	 */
@@ -197,7 +189,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a packed float value from the bitstream.
+	 * @brief Reads a packed float value from the bitstream.
 	 * @param[out] value The float value read from the bitstream.
 	 * @return True if the value was successfully read, false otherwise.
 	 */
@@ -210,8 +202,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a packed string from the bitstream.
-	 *
+	 * @brief Reads a packed string from the bitstream.
 	 * @param[out] value The string value read from the bitstream.
 	 * @return True if the string was successfully read, false otherwise.
 	 */
@@ -233,7 +224,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Aligns the bitstream to the next integer boundary.
+	 * @brief Aligns the bitstream to the next integer boundary.
 	 */
 	void Align() {
 		// If we need to align, skip to next int.
@@ -244,7 +235,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads an aligned integer value from the bitstream.
+	 * @brief Reads an aligned integer value from the bitstream.
 	 * @param[out] value The integer value read from the bitstream.
 	 * @return True if the read operation was successful, false otherwise.
 	 */
@@ -254,7 +245,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a boolean value from the bitstream.
+	 * @brief Reads a boolean value from the bitstream.
 	 * @param[out] value - The boolean value to be read.
 	 * @return Returns true if the read operation was successful, false otherwise.
 	 */
@@ -264,7 +255,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a value from the bitstream in an aligned manner.
+	 * @brief Reads a value from the bitstream in an aligned manner.
 	 * @param[out] value The value to be read from the bitstream.
 	 * @return Returns true if the value was successfully read, false otherwise.
 	 */
@@ -274,7 +265,7 @@ class BitStreamReader {
 	}
 
 	/**
-	 * Reads a string value from the bitstream in an aligned manner.
+	 * @brief Reads a string value from the bitstream in an aligned manner.
 	 * @param[out] value The string value read from the bitstream.
 	 * @return True if the read operation was successful, false otherwise.
 	 */

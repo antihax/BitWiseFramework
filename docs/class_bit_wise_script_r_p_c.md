@@ -38,19 +38,19 @@ Inherits from [BitStreamWriter](class_bit_stream_writer.md)
 | -------------- | -------------- |
 | bool | **[Align](class_bit_stream_writer.md#function-align)**()<br>Aligns the bitstream to the next integer boundary.  |
 | void | **[BitStreamWriter](class_bit_stream_writer.md#function-bitstreamwriter)**(Serializer context =NULL)<br>Initializes a [BitStreamWriter](class_bit_stream_writer.md) object.  |
-| int | **[GetIndex](class_bit_stream_writer.md#function-getindex)**() |
-| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(int value) |
-| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(bool value) |
-| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(string value) |
-| bool | **[WriteHalfFloat](class_bit_stream_writer.md#function-writehalffloat)**(float value) |
-| bool | **[WriteHalfVector](class_bit_stream_writer.md#function-writehalfvector)**(vector value) |
-| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(bool value) |
-| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(float value) |
-| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(vector value) |
-| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(string value) |
-| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(Object object) |
-| bool | **[WriteSInt](class_bit_stream_writer.md#function-writesint)**(int value, int bits) |
-| bool | **[WriteUInt](class_bit_stream_writer.md#function-writeuint)**(int value, int bits) |
+| int | **[GetIndex](class_bit_stream_writer.md#function-getindex)**()<br>Returns the current bit index.  |
+| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(int value)<br>[AVOID] Writes an integer value to the bitstream, aligning the bitstream first.  |
+| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(bool value)<br>[AVOID] Writes a boolean value to the bitstream in an aligned manner.  |
+| bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(string value)<br>[AVOID] Writes a string value to the bitstream in an aligned manner.  |
+| bool | **[WriteHalfFloat](class_bit_stream_writer.md#function-writehalffloat)**(float value)<br>Writes a half-precision floating-point value [16 bits] to the bitstream. Useful when precision can be sacrificed for bandwidth.  |
+| bool | **[WriteHalfVector](class_bit_stream_writer.md#function-writehalfvector)**(vector value)<br>Writes a half-precision vector to the bitstream. Useful when precision can be sacrificed for bandwidth.  |
+| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(bool value)<br>Writes a boolean value [1 bit] to the bitstream.  |
+| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(float value)<br>Writes a float value [32 bits] as an int to the bitstream.  |
+| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(vector value)<br>Writes a vector value [96 bits] to the bitstream.  |
+| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(string value)<br>Writes a packed string to the bitstream.  |
+| bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(Object object)<br>Writes a packed object [64 bits] to the bitstream.  |
+| bool | **[WriteSInt](class_bit_stream_writer.md#function-writesint)**(int value, int bits)<br>WriteSInt is a function that writes a signed integer value to a bitstream.  |
+| bool | **[WriteUInt](class_bit_stream_writer.md#function-writeuint)**(int value, int bits)<br>Writes an unsigned integer value to the bitstream.  |
 | void | **[~BitStreamWriter](class_bit_stream_writer.md#function-~bitstreamwriter)**() |
 
 **Public Attributes inherited from [BitStreamWriter](class_bit_stream_writer.md)**
@@ -153,4 +153,4 @@ public ref ScriptRPC m_ScriptRPC;
 
 -------------------------------
 
-Updated on 2023-08-26 at 11:48:46 -0500
+Updated on 2023-08-26 at 12:05:38 -0500

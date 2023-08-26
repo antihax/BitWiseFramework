@@ -14,8 +14,9 @@
  * This class is responsible for writing data into a bitstream.
  * It provides methods to write various types of data (like integers, floats, etc.) into the bitstream.
  * The data can then be read from the bitstream using a BitStreamReader.
- */
 
+ * @brief A class for writing bits from a stream.
+ */
 class BitStreamWriter {
 	private int m_BitIndex;
 	protected Serializer m_Context;
@@ -36,6 +37,7 @@ class BitStreamWriter {
 	}
 	/**
 	 * Returns the current bit index.
+	 * @brief Returns the current bit index.
 	 * @return The current bit index.
 	 */
 	int GetIndex() {
@@ -71,7 +73,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * Writes an unsigned integer value to the bitstream.
+	 * @brief Writes an unsigned integer value to the bitstream.
 	 * @param value The integer value to write.
 	 * @param bits The number of bits to use to represent the integer value.
 	 * @return Returns true if the write operation was successful, false otherwise.
@@ -110,7 +112,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * WriteSInt is a function that writes a signed integer value to a bitstream.
+	 * @brief WriteSInt is a function that writes a signed integer value to a bitstream.
 	 * @param value The integer value to be written to the bitstream.
 	 * @param bits The number of bits to be written from the value to the bitstream.
 	 * @return Returns true if the operation is successful, false otherwise.
@@ -130,7 +132,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * Writes a half-precision vector to the bitstream. Useful when precision can be sacrificed for bandwidth.
+	 * @brief Writes a half-precision vector to the bitstream. Useful when precision can be sacrificed for bandwidth.
 	 *
 	 * @param value The value to write.
 	 * @return True if the write was successful, false otherwise.
@@ -146,8 +148,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * Writes a half-precision floating-point value to the bitstream. Useful when precision can be sacrificed for bandwidth.
-	 *
+	 * @brief Writes a half-precision floating-point value [16 bits] to the bitstream. Useful when precision can be sacrificed for bandwidth.
 	 * @param value The value to write.
 	 * @return True if the write was successful, false otherwise.
 	 */
@@ -156,7 +157,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * Writes a boolean value to the bitstream.
+	 * @brief Writes a boolean value [1 bit] to the bitstream.
 	 * @param value The boolean value to write.
 	 * @return True if the value was successfully written, false otherwise.
 	 */
@@ -165,8 +166,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * Writes a float value as an int to the bitstream.
-	 *
+	 * @brief Writes a float value [32 bits] as an int to the bitstream.
 	 * @param value The float value to be written.
 	 * @return True if the write operation was successful, false otherwise.
 	 */
@@ -176,8 +176,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * Writes a vector value to the bitstream.
-	 *
+	 * @brief Writes a vector value [96 bits] to the bitstream.
 	 * @param value The vector value to be written.
 	 * @return True if the write operation was successful, false otherwise.
 	 */
@@ -192,8 +191,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * Writes a packed string to the bitstream.
-	 *
+	 * @brief Writes a packed string to the bitstream.
 	 * @param value The string to write.
 	 * @return True if the string was successfully written, false otherwise.
 	 */
@@ -217,8 +215,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * Writes a packed object to the bitstream.
-	 *
+	 * @brief Writes a packed object [64 bits] to the bitstream.
 	 * @param object The object to write.
 	 * @return True if the object was successfully written, false otherwise.
 	 */
@@ -243,8 +240,7 @@ class BitStreamWriter {
 	 */
 
 	/**
-	 * Writes an integer value to the bitstream, aligning the bitstream first.
-	 *
+	 * @brief [AVOID] Writes an integer value to the bitstream, aligning the bitstream first.
 	 * @param value The integer value to write to the bitstream.
 	 * @return True if the write was successful, false otherwise.
 	 */
@@ -254,7 +250,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * Writes a boolean value to the bitstream in an aligned manner.
+	 * @brief [AVOID] Writes a boolean value to the bitstream in an aligned manner.
 	 * @param value The boolean value to be written.
 	 * @return Returns true if the write operation was successful, false otherwise.
 	 */
@@ -264,8 +260,7 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * Writes a string value to the bitstream in an aligned manner.
-	 *
+	 * @brief [AVOID] Writes a string value to the bitstream in an aligned manner.
 	 * @param value The string value to be written.
 	 * @return Returns true if the write operation was successful, false otherwise.
 	 */
