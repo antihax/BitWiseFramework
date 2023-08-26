@@ -24,12 +24,13 @@ Inherited by [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md)
 | bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(bool value)<br>[AVOID] Writes a boolean value to the bitstream in an aligned manner.  |
 | bool | **[WriteAligned](class_bit_stream_writer.md#function-writealigned)**(string value)<br>[AVOID] Writes a string value to the bitstream in an aligned manner.  |
 | bool | **[WriteHalfFloat](class_bit_stream_writer.md#function-writehalffloat)**(float value)<br>Writes a half-precision floating-point value [16 bits] to the bitstream. Useful when precision can be sacrificed for bandwidth.  |
-| bool | **[WriteHalfVector](class_bit_stream_writer.md#function-writehalfvector)**(vector value)<br>Writes a half-precision vector to the bitstream. Useful when precision can be sacrificed for bandwidth.  |
+| bool | **[WriteHalfVector](class_bit_stream_writer.md#function-writehalfvector)**(vector value)<br>Writes a half-precision vector [48 bits] to the bitstream. Useful when precision can be sacrificed for bandwidth.  |
 | bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(bool value)<br>Writes a boolean value [1 bit] to the bitstream.  |
 | bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(float value)<br>Writes a float value [32 bits] as an int to the bitstream.  |
 | bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(vector value)<br>Writes a vector value [96 bits] to the bitstream.  |
 | bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(string value)<br>Writes a packed string to the bitstream.  |
 | bool | **[WritePacked](class_bit_stream_writer.md#function-writepacked)**(Object object)<br>Writes a packed object [64 bits] to the bitstream.  |
+| bool | **[WriteRangedInt](class_bit_stream_writer.md#function-writerangedint)**(int value, int min, int max)<br>Writes a ranged integer value to the bitstream.  |
 | bool | **[WriteSInt](class_bit_stream_writer.md#function-writesint)**(int value, int bits)<br>WriteSInt is a function that writes a signed integer value to a bitstream.  |
 | bool | **[WriteUInt](class_bit_stream_writer.md#function-writeuint)**(int value, int bits)<br>Writes an unsigned integer value to the bitstream.  |
 | void | **[~BitStreamWriter](class_bit_stream_writer.md#function-~bitstreamwriter)**() |
@@ -184,7 +185,7 @@ bool WriteHalfVector(
 )
 ```
 
-Writes a half-precision vector to the bitstream. Useful when precision can be sacrificed for bandwidth. 
+Writes a half-precision vector [48 bits] to the bitstream. Useful when precision can be sacrificed for bandwidth. 
 
 **Parameters**: 
 
@@ -278,6 +279,27 @@ Writes a packed object [64 bits] to the bitstream.
 
 **Return**: True if the object was successfully written, false otherwise. 
 
+### function WriteRangedInt
+
+```cpp
+bool WriteRangedInt(
+    int value,
+    int min,
+    int max
+)
+```
+
+Writes a ranged integer value to the bitstream. 
+
+**Parameters**: 
+
+  * **value** The integer value to be written to the bitstream. 
+  * **min** The start of the range. 
+  * **max** The end of the range. 
+
+
+**Return**: Returns true if the operation is successful, false otherwise. 
+
 ### function WriteSInt
 
 ```cpp
@@ -355,4 +377,4 @@ public int m_WorkingIndex = 0;
 
 -------------------------------
 
-Updated on 2023-08-26 at 12:05:38 -0500
+Updated on 2023-08-26 at 16:48:44 -0500

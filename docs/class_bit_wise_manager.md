@@ -13,12 +13,14 @@ title: BitWiseManager
 
 |                | Name           |
 | -------------- | -------------- |
-| void | **[BitWiseManager](class_bit_wise_manager.md#function-bitwisemanager)**() |
+| void | **[BitWiseManager](class_bit_wise_manager.md#function-bitwisemanager)**()<br>Initializes a [BitWiseManager](class_bit_wise_manager.md) object. Access through `GetBitWiseManager()` |
 | int | **[ConnectEndpoint](class_bit_wise_manager.md#function-connectendpoint)**(string mod, string keyword, ScriptCaller caller)<br>Connects an endpoint to a script caller. The endpoint is invoked when the RPC is called.  |
 | public string | **[EndPointName](class_bit_wise_manager.md#function-endpointname)**(string mod, string keyword) |
-| int | **[GetIndexForKeyword](class_bit_wise_manager.md#function-getindexforkeyword)**(string mod, string keyword) |
-| void | **[_OnRPC](class_bit_wise_manager.md#function--onrpc)**(PlayerIdentity sender, Object target, ParamsReadContext ctx) |
-| public void | **[_RPC_RPCTable](class_bit_wise_manager.md#function--rpc-rpctable)**(ParamsReadContext ctx) |
+| int | **[GetIndexForKeyword](class_bit_wise_manager.md#function-getindexforkeyword)**(string mod, string keyword)<br>Returns the endpoint index for a given mod and keyword.  |
+| int | **[RegisterEndpoint](class_bit_wise_manager.md#function-registerendpoint)**(string mod, string keyword)<br>Registers an endpoint for a mod and keyword for either client or server reception. Must be called on the server as early as possible.  |
+| void | **[_OnRPC](class_bit_wise_manager.md#function--onrpc)**(PlayerIdentity sender, Object target, ParamsReadContext ctx)<br>Internal function to handle RPCs.  |
+| public void | **[_RPC_RPCTable](class_bit_wise_manager.md#function--rpc-rpctable)**(ParamsReadContext ctx)<br>Internal function decode RPCTable.  |
+| void | **[_SendRPCTable](class_bit_wise_manager.md#function--sendrpctable)**(PlayerIdentity identity)<br>Internal function to send RPCTable to a client.  |
 | void | **[~BitWiseManager](class_bit_wise_manager.md#function-~bitwisemanager)**() |
 
 ## Public Attributes
@@ -49,6 +51,7 @@ RPC registration and invokation for BitWise RPCs. This class is not accessible t
 void BitWiseManager()
 ```
 
+Initializes a [BitWiseManager](class_bit_wise_manager.md) object. Access through `GetBitWiseManager()`
 
 ### function ConnectEndpoint
 
@@ -90,6 +93,36 @@ int GetIndexForKeyword(
 )
 ```
 
+Returns the endpoint index for a given mod and keyword. 
+
+**Parameters**: 
+
+  * **mod** The mod name. 
+  * **keyword** The keyword. 
+
+
+**Return**: The endpoint index. 
+
+### function RegisterEndpoint
+
+```cpp
+int RegisterEndpoint(
+    string mod,
+    string keyword
+)
+```
+
+Registers an endpoint for a mod and keyword for either client or server reception. Must be called on the server as early as possible. 
+
+**Parameters**: 
+
+  * **mod** The mod name. 
+  * **keyword** The keyword. 
+
+
+**Return**: The endpoint index. 
+
+**Note**: This function is only available on the server. 
 
 ### function _OnRPC
 
@@ -101,6 +134,7 @@ void _OnRPC(
 )
 ```
 
+Internal function to handle RPCs. 
 
 ### function _RPC_RPCTable
 
@@ -110,6 +144,17 @@ public void _RPC_RPCTable(
 )
 ```
 
+Internal function decode RPCTable. 
+
+### function _SendRPCTable
+
+```cpp
+void _SendRPCTable(
+    PlayerIdentity identity
+)
+```
+
+Internal function to send RPCTable to a client. 
 
 ### function ~BitWiseManager
 
@@ -164,4 +209,4 @@ protected ref BitWiseScriptRPC m_RPCTableRPC;
 
 -------------------------------
 
-Updated on 2023-08-26 at 12:05:38 -0500
+Updated on 2023-08-26 at 16:48:44 -0500

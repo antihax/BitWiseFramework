@@ -29,6 +29,7 @@ A class for reading bits from a stream.  [More...](#detailed-description)
 | bool | **[ReadPacked](class_bit_stream_reader.md#function-readpacked)**(out int value)<br>Reads a packed integer value from the bitstream.  |
 | bool | **[ReadPacked](class_bit_stream_reader.md#function-readpacked)**(out float value)<br>Reads a packed float value from the bitstream.  |
 | bool | **[ReadPacked](class_bit_stream_reader.md#function-readpacked)**(out string value)<br>Reads a packed string from the bitstream.  |
+| bool | **[ReadRangedInt](class_bit_stream_reader.md#function-readrangedint)**(out int value, int min, int max)<br>Reads a ranged integer value from the bitstream.  |
 | bool | **[ReadSInt](class_bit_stream_reader.md#function-readsint)**(out int value, int bits)<br>Reads a signed integer value from the bitstream.  |
 | bool | **[ReadUInt](class_bit_stream_reader.md#function-readuint)**(out int value, int bits)<br>Reads an unsigned integer value from the bitstream.  |
 | void | **[~BitStreamReader](class_bit_stream_reader.md#function-~bitstreamreader)**() |
@@ -291,6 +292,27 @@ Reads a packed string from the bitstream.
 
 **Return**: True if the string was successfully read, false otherwise. 
 
+### function ReadRangedInt
+
+```cpp
+bool ReadRangedInt(
+    out int value,
+    int min,
+    int max
+)
+```
+
+Reads a ranged integer value from the bitstream. 
+
+**Parameters**: 
+
+  * **value** The integer value read from the bitstream. 
+  * **min** The minimum value for the integer. 
+  * **max** The maximum value for the integer. 
+
+
+**Return**: True if the integer value was successfully read, false otherwise. 
+
 ### function ReadSInt
 
 ```cpp
@@ -368,4 +390,4 @@ public int m_WorkingIndex;
 
 -------------------------------
 
-Updated on 2023-08-26 at 12:05:38 -0500
+Updated on 2023-08-26 at 16:48:44 -0500

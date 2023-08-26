@@ -41,12 +41,7 @@ class BitWiseHelpers {
 	 * @return The number of bits required to represent the given integer.
 	 */
 	static int BitSize(int n) {
-		int bits = 0;
-		while (n != 0) {
-			n >>= 1;
-			bits++;
-		}
-		return bits;
+		return Math.Log2(n) + 1;
 	}
 
 	/**

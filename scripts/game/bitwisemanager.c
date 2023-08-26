@@ -7,6 +7,7 @@
  * To view a copy of this license, visit https://creativecommons.org/licenses/by-nd/4.0/
  *
  */
+
 enum BitWiseRPC {
 	LookupEndpoint = 0,
 	RPCTable = 1,
@@ -16,6 +17,9 @@ enum BitWiseRPC {
 }
 
 private ref BitWiseManager gBitWiseManager = new BitWiseManager();
+/**
+ * @brief Returns the BitWiseManager used to interface with the RPC registration.
+ */
 BitWiseManager GetBitWiseManager() {
 	return gBitWiseManager;
 }
@@ -26,6 +30,7 @@ BitWiseManager GetBitWiseManager() {
  */
 
 class BitWiseManager {
+
 	protected ref map<int, ref ScriptCaller> m_Endpoints;
 	protected ref map<string, ref ScriptCaller> m_PendingEndpoints;
 	protected ref map<string, int> m_EndpointNames;
@@ -33,6 +38,9 @@ class BitWiseManager {
 	protected ref BitWiseScriptRPC m_RPCTableRPC;
 	protected int m_EndpointIndex;
 
+	/**
+	 * @brief Initializes a BitWiseManager object. Access through `GetBitWiseManager()`
+	 */
 	void BitWiseManager() {
 		m_Endpoints = new map<int, ref ScriptCaller>();
 		m_EndpointNames = new map<string, int>();
@@ -49,6 +57,87 @@ class BitWiseManager {
 		delete m_EndpointNames;
 	}
 
+	/**
+	 * @brief Internal function to handle RPCs.
+	 */
+	void _OnRPC(PlayerIdentity sender, Object target, ParamsReadContext ctx) {
+		int index;
+		if (!ctx.Read(index)) {
+			Error("BitWiseManager::OnRPC: Failed to read index.");
+			return;
+		}
+		switch (index) {
+		case BitWiseRPC.RPCTable:
+			_RPC_RPCTable(ctx);
+			break;
+		default: // Invoke endpoint
+			m_Endpoints.Get(index).Invoke(sender, target, ctx);
+		}
+	}
+
+	/**
+	 * @brief Internal function decode RPCTable
+	 */
+	private void _RPC_RPCTable(ParamsReadContext ctx) {
+		BitStreamReader br = new BitStreamReader(ctx);
+
+		int count;
+		if (!br.ReadUInt(count, BITWISE_RPC_SIZE)) {
+			Error("BitWiseManager::RPC_RPCTable: Failed to read count.");
+			return;
+		}
+
+		// Only use as many bits as needed for the index
+		int bits = BitWiseHelpers.BitSize(count + BitWiseRPC.MAX_BITWISE_RPC);
+		while (count--) {
+			string name;
+			int index;
+			if (!br.ReadPacked(name)) {
+				Error("BitWiseManager::RPC_RPCTable: Failed to read name.");
+				return;
+			}
+
+			if (!br.ReadUInt(index, bits)) {
+				Error("BitWiseManager::RPC_RPCTable: Failed to read index.");
+				return;
+			}
+
+			m_EndpointNames.Insert(name, index);
+			// If the endpoint is pending, connect the invoker
+			if (m_PendingEndpoints.Contains(name)) {
+				m_Endpoints[index] = m_PendingEndpoints.Get(name);
+				m_PendingEndpoints.Remove(name);
+			}
+		}
+	}
+
+#ifdef SERVER
+	/**
+	 * @brief Internal function to send RPCTable to a client.
+	 */
+	void _SendRPCTable(PlayerIdentity identity) {
+		if (m_DirtyRPCTable) {
+			m_RPCTableRPC.Reset();
+			m_RPCTableRPC.WriteUInt(m_EndpointNames.Count(), BITWISE_RPC_SIZE);
+			int bits = BitWiseHelpers.BitSize(m_EndpointNames.Count() + BitWiseRPC.MAX_BITWISE_RPC);
+			// clang-format off
+				foreach(string name, int id	: m_EndpointNames) {
+				// clang-format on
+				m_RPCTableRPC.WritePacked(name);
+				m_RPCTableRPC.WriteUInt(id, bits);
+			}
+			m_DirtyRPCTable = false;
+		}
+		m_RPCTableRPC.Send(NULL, true, identity);
+	}
+#endif
+
+	/**
+	 * @brief Returns the endpoint index for a given mod and keyword.
+	 * @param mod The mod name.
+	 * @param keyword The keyword.
+	 * @return The endpoint index.
+	 */
 	int GetIndexForKeyword(string mod, string keyword) {
 		return m_EndpointNames.Get(EndPointName(mod, keyword));
 	}
@@ -83,7 +172,6 @@ class BitWiseManager {
 	 * @param caller The script caller to run on RPC.
 	 * @return The endpoint index.
 	 */
-
 	int ConnectEndpoint(string mod, string keyword, ScriptCaller caller) {
 		if (!caller) {
 			Error("BitWiseManager::RegisterEndpoint: caller is NULL.");
@@ -109,73 +197,8 @@ class BitWiseManager {
 	 * @param mod The mod name.
 	 * @param keyword The keyword.
 	 * @return The endpoint name.
-	 *
 	 */
 	private string EndPointName(string mod, string keyword) {
 		return mod + ":" + keyword;
 	}
-
-	void _OnRPC(PlayerIdentity sender, Object target, ParamsReadContext ctx) {
-		int index;
-		if (!ctx.Read(index)) {
-			Error("BitWiseManager::OnRPC: Failed to read index.");
-			return;
-		}
-		switch (index) {
-		case BitWiseRPC.RPCTable:
-			_RPC_RPCTable(ctx);
-			break;
-		default: // Invoke endpoint
-			m_Endpoints.Get(index).Invoke(sender, target, ctx);
-		}
-	}
-
-	private void _RPC_RPCTable(ParamsReadContext ctx) {
-		BitStreamReader br = new BitStreamReader(ctx);
-
-		int count;
-		if (!br.ReadUInt(count, BITWISE_RPC_SIZE)) {
-			Error("BitWiseManager::RPC_RPCTable: Failed to read count.");
-			return;
-		}
-		int bits = BitWiseHelpers.BitSize(count + BitWiseRPC.MAX_BITWISE_RPC);
-		while (count--) {
-			string name;
-			int index;
-			if (!br.ReadPacked(name)) {
-				Error("BitWiseManager::RPC_RPCTable: Failed to read name.");
-				return;
-			}
-
-			if (!br.ReadUInt(index, bits)) {
-				Error("BitWiseManager::RPC_RPCTable: Failed to read index.");
-				return;
-			}
-
-			m_EndpointNames.Insert(name, index);
-			// If the endpoint is pending, connect the invoker
-			if (m_PendingEndpoints.Contains(name)) {
-				m_Endpoints[index] = m_PendingEndpoints.Get(name);
-				m_PendingEndpoints.Remove(name);
-			}
-		}
-	}
-
-#ifdef SERVER
-	void _SendRPCTable(PlayerIdentity identity) {
-		if (m_DirtyRPCTable) {
-			m_RPCTableRPC.Reset();
-			m_RPCTableRPC.WriteUInt(m_EndpointNames.Count(), BITWISE_RPC_SIZE);
-			int bits = BitWiseHelpers.BitSize(m_EndpointNames.Count() + BitWiseRPC.MAX_BITWISE_RPC);
-			// clang-format off
-				foreach(string name, int id	: m_EndpointNames) {
-				// clang-format on
-				m_RPCTableRPC.WritePacked(name);
-				m_RPCTableRPC.WriteUInt(id, bits);
-			}
-			m_DirtyRPCTable = false;
-		}
-		m_RPCTableRPC.Send(NULL, true, identity);
-	}
-#endif
 }

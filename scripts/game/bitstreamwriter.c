@@ -78,7 +78,6 @@ class BitStreamWriter {
 	 * @param bits The number of bits to use to represent the integer value.
 	 * @return Returns true if the write operation was successful, false otherwise.
 	 */
-
 	bool WriteUInt(int value, int bits) {
 		if (bits <= 0 || bits > SIZE_OF_INT_BITS) {
 			return false;
@@ -132,8 +131,24 @@ class BitStreamWriter {
 	}
 
 	/**
-	 * @brief Writes a half-precision vector to the bitstream. Useful when precision can be sacrificed for bandwidth.
-	 *
+	 * @brief Writes a ranged integer value to the bitstream.
+	 * @param value The integer value to be written to the bitstream.
+	 * @param min The start of the range.
+	 * @param max The end of the range.
+	 * @return Returns true if the operation is successful, false otherwise.
+	 */
+	bool WriteRangedInt(int value, int min, int max) {
+		if (min > max) {
+			Error("BitStreamWriter::WriteRanged - min > max");
+			return false;
+		}
+		int rangeSize = max - min + 1;
+		int rangeBits = BitWiseHelpers.BitSize(rangeSize);
+		return WriteUInt((value - min), rangeBits);
+	}
+
+	/**
+	 * @brief Writes a half-precision vector [48 bits] to the bitstream. Useful when precision can be sacrificed for bandwidth.
 	 * @param value The value to write.
 	 * @return True if the write was successful, false otherwise.
 	 */

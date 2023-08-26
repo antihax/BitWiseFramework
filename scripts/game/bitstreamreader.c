@@ -120,6 +120,21 @@ class BitStreamReader {
 	}
 
 	/**
+	 * @brief Reads a ranged integer value from the bitstream.
+	 * @param[out] value The integer value read from the bitstream.
+	 * @param[in] min The minimum value for the integer.
+	 * @param[in] max The maximum value for the integer.
+	 * @return True if the integer value was successfully read, false otherwise.
+	 */
+	bool ReadRangedInt(out int value, int min, int max) {
+		int bits = BitWiseHelpers.BitSize(max - min);
+		if (!ReadUInt(value, bits))
+			return false;
+		value += min;
+		return true;
+	}
+
+	/**
 	 * @brief Reads a half-precision floating-point value from the bit stream.
 	 * @param[out] value The half-precision floating-point value read from the bit stream.
 	 * @return True if the read operation was successful, false otherwise.
