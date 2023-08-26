@@ -60,6 +60,17 @@ void test_Bitstream() {
 	assert (bs.WriteUInt(21474837, 31) == true);
 	assert (bs.GetIndex() == 121, bs.GetIndex(), 121);
 
+	vector vec = "1.3 2.4 2.7";
+
+	assert (bs.WriteRangedInt(5, 1, 10) == true);
+	assert (bs.WriteHalfFloat(1.2345) == true);
+	assert (bs.WriteHalfVector(vec) == true);
+	assert (bs.WriteSInt(-2147483648, 32) == true);
+	assert (bs.WritePacked(true) == true);
+	assert (bs.WritePacked(1.23456) == true);
+	assert (bs.WritePacked(vec) == true);
+	assert (bs.WritePacked("because my nostrils are quite sensitive") == true);
+
 	while ((bs.GetIndex() - 1) % 32 != 0) {
 		Print("Aligning...");
 		bs.WritePacked(false);
@@ -159,6 +170,67 @@ void test_Bitstream() {
 		Print("Failed " + v.ToString());
 	}
 	int f;
+	float fval;
+	vector vec2;
+
+	bsr.ReadRangedInt(v, 1, 10);
+	if (v == 5) {
+		Print("Passed " + v.ToString());
+	} else {
+		Print("Failed " + v.ToString());
+	}
+
+	bsr.ReadHalfFloat(fval);
+	if (fval.ToString() == "1.23438") {
+		Print("Passed " + fval.ToString());
+	} else {
+		Print("Failed " + fval.ToString());
+	}
+
+	// We lose presicion here
+	// Original value:  "1.3 2.4 2.7";
+	bsr.ReadHalfVector(vec2);
+	if (vec2.ToString() == "<1.299805, 2.398438, 2.699219>") {
+		Print("Passed " + vec2.ToString());
+	} else {
+		Print("Failed " + vec2.ToString());
+	}
+
+	bsr.ReadSInt(v, 32);
+	if (v == -2147483648) {
+		Print("Passed " + v.ToString());
+	} else {
+		Print("Failed " + v.ToString());
+	}
+
+	bsr.ReadPacked(b);
+	if (b == true) {
+		Print("Passed " + b.ToString());
+	} else {
+		Print("Failed " + b.ToString());
+	}
+
+	bsr.ReadPacked(fval);
+	if (fval == 1.23456) {
+		Print("Passed " + fval.ToString());
+	} else {
+		Print("Failed " + fval.ToString());
+	}
+
+	bsr.ReadPacked(vec2);
+	if (vec2 == vec) {
+		Print("Passed " + vec2.ToString());
+	} else {
+		Print("Failed " + vec2.ToString());
+	}
+
+	string str;
+	bsr.ReadPacked(str);
+	if (str == "because my nostrils are quite sensitive") {
+		Print("Passed " + str);
+	} else {
+		Print("Failed " + str);
+	}
 
 	// Align
 	while ((bsr.GetIndex() - 1) % 32 != 0) {
