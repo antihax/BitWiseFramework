@@ -4,6 +4,19 @@ class BitWiseBenchmarks {
 	ref ScriptCaller ReusetestCaller;
 
 	void BitWiseBenchmarks() {
+
+		// Initialize BitStream
+		FileSerializer fs = new FileSerializer();
+		fs.Open("$profile:\FSWiseTestBW", FileMode.WRITE);
+		BitStreamWriter bs = new BitStreamWriter(fs);
+		for (int i = 0; i < 10; i++) {
+			bs.WritePacked(true);
+		}
+		for (i = 0; i < 10; i++) {
+			bs.WriteRangedInt(i, 0, 10);
+		}
+		bs.WritePacked("Test String");
+		fs.Close();
 	}
 	void Run() {
 		ReusetestCaller = ScriptCaller.Create(CallMeMaybe);

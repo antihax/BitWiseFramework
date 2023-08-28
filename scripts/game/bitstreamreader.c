@@ -127,7 +127,7 @@ class BitStreamReader {
 	 * @return True if the integer value was successfully read, false otherwise.
 	 */
 	bool ReadRangedInt(out int value, int min, int max) {
-		int bits = BitWiseHelpers.BitSize(max - min);
+		int bits = BitWiseHelpers.BitSize(max - min + 1);
 		if (!ReadUInt(value, bits))
 			return false;
 		value += min;

@@ -1,5 +1,5 @@
 class CfgPatches {
-	class BitWiseFrameworkMod {
+	class BitWiseFramework {
 		requiredAddons[] = {};
 	};
 };

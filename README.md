@@ -7,14 +7,12 @@
 
 ## About
 
-BitWise is a Work In Progress DayZ RPC Framework to solve some common problems:
+BitWise is a DayZ RPC Framework to solve some common problems and to not repeat myself in other mods:
 
 1. Mod RPC send far more data than needed.
-2. RPC type ID are impossible to manage.
-3. DayZ has some solutions but inconsistently used. See `VirtualHud` and `BitArray` in the DayZ Script code.
+2. rpc_type are impossible to manage between many other modders.
+3. DayZ has solutions but inconsistently used. See `VirtualHud` and `BitArray` in the DayZ Script code.
 4. On_RPC ScriptInvoker is not performant.
-
-Widespread use of this is not expected, I just want something to save repeating myself elsewhere.
 
 ## Goals
 

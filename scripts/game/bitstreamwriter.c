@@ -142,6 +142,17 @@ class BitStreamWriter {
 			Error("BitStreamWriter::WriteRanged - min > max");
 			return false;
 		}
+
+		if (value > max) {
+			Error(string.Format("BitStreamWriter::WriteRanged - %1 > %2.", value, max));
+			return false;
+		}
+
+		if (value < min) {
+			Error(string.Format("BitStreamWriter::WriteRanged - %1 < %2.", value, min));
+			return false;
+		}
+
 		int rangeSize = max - min + 1;
 		int rangeBits = BitWiseHelpers.BitSize(rangeSize);
 		return WriteUInt((value - min), rangeBits);
