@@ -30,12 +30,11 @@ BitWiseManager GetBitWiseManager() {
  */
 
 class BitWiseManager {
-
-	protected ref map<int, ref ScriptCaller> m_Endpoints;
-	protected ref map<string, ref ScriptCaller> m_PendingEndpoints;
-	protected ref map<string, int> m_EndpointNames;
+	protected autoptr map<int, ref ScriptCaller> m_Endpoints;
+	protected autoptr map<string, ref ScriptCaller> m_PendingEndpoints;
+	protected autoptr map<string, int> m_EndpointNames;
 	protected bool m_DirtyRPCTable = true;
-	protected ref BitWiseScriptRPC m_RPCTableRPC;
+	protected autoptr BitWiseScriptRPC m_RPCTableRPC;
 	protected int m_EndpointIndex;
 
 	/**
@@ -53,8 +52,6 @@ class BitWiseManager {
 	}
 
 	void ~BitWiseManager() {
-		delete m_Endpoints;
-		delete m_EndpointNames;
 	}
 
 	/**
@@ -120,9 +117,8 @@ class BitWiseManager {
 			m_RPCTableRPC.Reset();
 			m_RPCTableRPC.WriteUInt(m_EndpointNames.Count(), BITWISE_RPC_SIZE);
 			int bits = BitWiseHelpers.BitSize(m_EndpointNames.Count() + BitWiseRPC.MAX_BITWISE_RPC);
-			// clang-format off
-				foreach(string name, int id	: m_EndpointNames) {
-				// clang-format on
+
+			foreach (string name, int id: m_EndpointNames) {
 				m_RPCTableRPC.WritePacked(name);
 				m_RPCTableRPC.WriteUInt(id, bits);
 			}

@@ -29,10 +29,10 @@ title: BitWiseManager
 | -------------- | -------------- |
 | protected bool | **[m_DirtyRPCTable](class_bit_wise_manager.md#variable-m-dirtyrpctable)**  |
 | protected int | **[m_EndpointIndex](class_bit_wise_manager.md#variable-m-endpointindex)**  |
-| protected ref map< string, int > | **[m_EndpointNames](class_bit_wise_manager.md#variable-m-endpointnames)**  |
-| protected ref map< int, ref ScriptCaller > | **[m_Endpoints](class_bit_wise_manager.md#variable-m-endpoints)**  |
-| protected ref map< string, ref ScriptCaller > | **[m_PendingEndpoints](class_bit_wise_manager.md#variable-m-pendingendpoints)**  |
-| protected ref [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) | **[m_RPCTableRPC](class_bit_wise_manager.md#variable-m-rpctablerpc)**  |
+| protected autoptr map< string, int > | **[m_EndpointNames](class_bit_wise_manager.md#variable-m-endpointnames)**  |
+| protected autoptr map< int, ref ScriptCaller > | **[m_Endpoints](class_bit_wise_manager.md#variable-m-endpoints)**  |
+| protected autoptr map< string, ref ScriptCaller > | **[m_PendingEndpoints](class_bit_wise_manager.md#variable-m-pendingendpoints)**  |
+| protected autoptr [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) | **[m_RPCTableRPC](class_bit_wise_manager.md#variable-m-rpctablerpc)**  |
 
 ## Detailed Description
 
@@ -182,31 +182,31 @@ protected int m_EndpointIndex;
 ### variable m_EndpointNames
 
 ```cpp
-protected ref map< string, int > m_EndpointNames;
+protected autoptr map< string, int > m_EndpointNames;
 ```
 
 
 ### variable m_Endpoints
 
 ```cpp
-protected ref map< int, ref ScriptCaller > m_Endpoints;
+protected autoptr map< int, ref ScriptCaller > m_Endpoints;
 ```
 
 
 ### variable m_PendingEndpoints
 
 ```cpp
-protected ref map< string, ref ScriptCaller > m_PendingEndpoints;
+protected autoptr map< string, ref ScriptCaller > m_PendingEndpoints;
 ```
 
 
 ### variable m_RPCTableRPC
 
 ```cpp
-protected ref BitWiseScriptRPC m_RPCTableRPC;
+protected autoptr BitWiseScriptRPC m_RPCTableRPC;
 ```
 
 
 -------------------------------
 
-Updated on 2023-08-27 at 15:58:52 -0500
+Updated on 2024-01-07 at 08:39:57 -0600

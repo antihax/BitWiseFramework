@@ -28,7 +28,7 @@ Inherits from [BitStreamWriter](class_bit_stream_writer.md)
 |                | Name           |
 | -------------- | -------------- |
 | public int | **[m_Index](class_bit_wise_script_r_p_c.md#variable-m-index)**  |
-| public ref ScriptRPC | **[m_ScriptRPC](class_bit_wise_script_r_p_c.md#variable-m-scriptrpc)**  |
+| public autoptr ScriptRPC | **[m_ScriptRPC](class_bit_wise_script_r_p_c.md#variable-m-scriptrpc)**  |
 
 ## Additional inherited members
 
@@ -148,10 +148,10 @@ public int m_Index;
 ### variable m_ScriptRPC
 
 ```cpp
-public ref ScriptRPC m_ScriptRPC;
+public autoptr ScriptRPC m_ScriptRPC;
 ```
 
 
 -------------------------------
 
-Updated on 2023-08-27 at 15:58:52 -0500
+Updated on 2024-01-07 at 08:39:57 -0600

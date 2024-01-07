@@ -1,21 +1,55 @@
+/*
+ * BitWise Framework
+ * https://github.com/antihax/BitWiseFramework
+ * © 2023 antihax
+ *
+ * This work is licensed under the Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
+ * To view a copy of this license, visit https://creativecommons.org/licenses/by-nd/4.0/
+ *
+ */
 #ifdef BITWISEDEBUG
 class BitWiseBenchmarks {
-	ref ScriptInvoker ReusetestInvoker;
-	ref ScriptCaller ReusetestCaller;
+	autoptr ScriptInvoker ReusetestInvoker;
+	autoptr ScriptCaller ReusetestCaller;
 
 	void BitWiseBenchmarks() {
-
 		// Initialize BitStream
+		FileSerializer fsbw = new FileSerializer();
 		FileSerializer fs = new FileSerializer();
-		fs.Open("$profile:\FSWiseTestBW", FileMode.WRITE);
-		BitStreamWriter bs = new BitStreamWriter(fs);
+		FileSerializer fscf = new FileSerializer();
+		fsbw.Open("$profile:\FSWiseTestBW", FileMode.WRITE);
+		fs.Open("$profile:\FSWiseTest", FileMode.WRITE);
+		fscf.Open("$profile:\FSWiseTestCF", FileMode.WRITE);
+
+		// Simulate RPC
+		fs.Write(10000);
+
+		// Simulate RPC
+		fscf.Write(10042);
+		fscf.Write("ModName");
+		fscf.Write("FuncName");
+
+		// Simulate RPC
+		fsbw.Write(RPC_ANTIHAX_BITWISE);
+		fsbw.Write(123);
+
+		BitStreamWriter bs = new BitStreamWriter(fsbw);
 		for (int i = 0; i < 10; i++) {
 			bs.WritePacked(true);
+			fs.Write(true);
+			fscf.Write(true);
 		}
 		for (i = 0; i < 10; i++) {
 			bs.WriteRangedInt(i, 0, 10);
+			fs.Write(i);
+			fscf.Write(i);
 		}
 		bs.WritePacked("Test String");
+		fs.Write("Test String");
+		fscf.Write("Test String");
+
+		fsbw.Close();
+		fscf.Close();
 		fs.Close();
 	}
 	void Run() {
@@ -71,16 +105,14 @@ class BitWiseBenchmarks {
 	}
 
 	void BenchmarkScriptInvoker() {
-		ScriptInvoker testCaller = new ScriptInvoker();
+		autoptr ScriptInvoker testCaller = new ScriptInvoker();
 		testCaller.Insert(CallMeMaybe);
 		testCaller.Invoke(1234);
-		delete testCaller;
 	}
 
 	void BenchmarkScriptCaller() {
-		ScriptCaller testCaller = ScriptCaller.Create(CallMeMaybe);
+		autoptr ScriptCaller testCaller = ScriptCaller.Create(CallMeMaybe);
 		testCaller.Invoke(1234);
-		delete testCaller;
 	}
 	void BenchmarkReuseScriptCaller() {
 		ReusetestCaller.Invoke(1234);

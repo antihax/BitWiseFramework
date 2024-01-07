@@ -34,7 +34,6 @@ modded class DayZGame {
 	void DayZGame() {
 #ifdef BITWISEDEBUG
 #ifdef SERVER
-
 		GetBitWiseManager().RegisterEndpoint("BITWISE", "servertest1");
 		GetBitWiseManager().RegisterEndpoint("BITWISE", "servertest2");
 		GetBitWiseManager().RegisterEndpoint("BITWISE", "servertest3");

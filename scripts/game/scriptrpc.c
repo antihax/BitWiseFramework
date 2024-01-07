@@ -1,6 +1,15 @@
+/*
+ * BitWise Framework
+ * https://github.com/antihax/BitWiseFramework
+ * © 2023 antihax
+ *
+ * This work is licensed under the Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
+ * To view a copy of this license, visit https://creativecommons.org/licenses/by-nd/4.0/
+ *
+ */
 static const int BITWISE_RPC_SIZE = 17;
 class BitWiseScriptRPC : BitStreamWriter {
-	private ref ScriptRPC m_ScriptRPC;
+	private autoptr ScriptRPC m_ScriptRPC;
 	private int m_Index;
 
 	private void BitWiseScriptRPC(Serializer serializer = NULL) {
@@ -13,7 +22,6 @@ class BitWiseScriptRPC : BitStreamWriter {
 	}
 
 	void ~BitWiseScriptRPC() {
-		delete m_ScriptRPC;
 	}
 
 	static BitWiseScriptRPC NewFromID(int index) {

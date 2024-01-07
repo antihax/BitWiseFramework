@@ -1,5 +1,13 @@
+/*
+ * BitWise Framework
+ * https://github.com/antihax/BitWiseFramework
+ * © 2023 antihax
+ *
+ * This work is licensed under the Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
+ * To view a copy of this license, visit https://creativecommons.org/licenses/by-nd/4.0/
+ *
+ */
 #ifdef SERVER
-
 modded class MissionServer {
 	/**
 	 * @brief Overrides the OnClientPrepareEvent method to send the RPCTable to the player's identity.
@@ -20,6 +28,12 @@ modded class MissionServer {
 	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity) {
 		test_Endpoints();
 		super.InvokeOnConnect(player, identity);
+		EnProfiler.Enable(true, true, true);
+		EnProfiler.SetInterval(0, false);
+		EnProfiler.SetFlags(EnProfilerFlags.RECURSIVE, false);
+		EnProfiler.SetModule(EnProfilerModule.CORE, false);
+		EnProfiler.SetTimeResolution(1000);
+		EnProfiler.ResetSession(true);
 	}
 
 	override void InvokeOnDisconnect(PlayerBase player) {
@@ -27,13 +41,11 @@ modded class MissionServer {
 		EnProfiler.Dump();
 		array<ref EnProfilerTimeFuncPair> timePerFunc = {};
 		array<ref EnProfilerCountFuncPair> countPerFunc = {};
-		map<string, ref ProfileData> data = new map<string, ref ProfileData>();
+		map<string, ProfileData> data = new map<string, ProfileData>();
 		EnProfiler.GetTimePerFunc(timePerFunc);
 		EnProfiler.GetCountPerFunc(countPerFunc);
 
-		// clang-format off
-		foreach(auto pair : timePerFunc) {
-			// clang-format on
+		foreach (auto pair: timePerFunc) {
 			ProfileData d;
 			if (data.Find(pair.param2, d)) {
 				d.time += pair.param1;
@@ -44,10 +56,10 @@ modded class MissionServer {
 				d.name = pair.param2;
 				data.Insert(d.name, d);
 			}
+			Print(pair.param1.ToString() + " " + pair.param2);
 		}
 
-		// clang-format off
-		foreach(auto pairc : countPerFunc) {
+		foreach (auto pairc: countPerFunc) {
 			// clang-format on
 
 			if (data.Find(pairc.param2, d)) {
@@ -60,9 +72,7 @@ modded class MissionServer {
 			}
 		}
 
-		// clang-format off
-		foreach(string name, ProfileData x : data) {
-			// clang-format on
+		foreach (string name, ProfileData x: data) {
 			Print(MiscGameplayFunctions.Truncate((x.time / x.count), 4).ToString() + " " + name + " took " + x.time.ToString() + "ms and was called " + x.count.ToString() + " times.");
 		}
 	}
