@@ -8,7 +8,6 @@
  *
  */
 
-#define BITWISEFRAMEWORK
 static const int SIZE_OF_INT_BITS = 32;
 static const int RPC_ANTIHAX_BITWISE = -1456746571;
 
@@ -52,7 +51,7 @@ class BitWiseHelpers {
 	 */
 	static int FloatToInt(float value) {
 		int v[1];
-		float f[1] = {value};
+		float f[1] = { value };
 		copyarray(v, f);
 		return v[0];
 	}
@@ -65,7 +64,7 @@ class BitWiseHelpers {
 	 */
 	static float IntToFloat(int value) {
 		float f[1];
-		int v[1] = {value};
+		int v[1] = { value };
 		copyarray(f, v);
 		return f[0];
 	}

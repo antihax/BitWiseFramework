@@ -15,10 +15,10 @@ Inherits from [BitStreamWriter](class_bit_stream_writer.md)
 
 |                | Name           |
 | -------------- | -------------- |
-| public void | **[BitWiseScriptRPC](class_bit_wise_script_r_p_c.md#function-bitwisescriptrpc)**(Serializer serializer =NULL) |
+| public void | **[BitWiseScriptRPC](class_bit_wise_script_r_p_c.md#function-bitwisescriptrpc)**(Serializer serializer =NULL)<br>Initializes the [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) object.  |
 | [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) | **[New](class_bit_wise_script_r_p_c.md#function-new)**(string mod, string keyword) |
 | [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) | **[NewFromID](class_bit_wise_script_r_p_c.md#function-newfromid)**(int index) |
-| override void | **[Reset](class_bit_wise_script_r_p_c.md#function-reset)**() |
+| override void | **[Reset](class_bit_wise_script_r_p_c.md#function-reset)**()<br>Resets the script and the ScriptRPC object.  |
 | void | **[Send](class_bit_wise_script_r_p_c.md#function-send)**(Object target, bool guaranteed, PlayerIdentity recipient =NULL)<br>Send the RPC on the wire, can be saved and repeated if needed.  |
 | public void | **[SetIndex](class_bit_wise_script_r_p_c.md#function-setindex)**(int index) |
 | void | **[~BitWiseScriptRPC](class_bit_wise_script_r_p_c.md#function-~bitwisescriptrpc)**() |
@@ -74,6 +74,15 @@ public void BitWiseScriptRPC(
 )
 ```
 
+Initializes the [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) object. 
+
+**Parameters**: 
+
+  * **serializer** The serializer to be used for serialization (optional, default value is NULL). 
+
+
+This function creates a new ScriptRPC object.
+
 
 ### function New
 
@@ -85,6 +94,17 @@ static BitWiseScriptRPC New(
 ```
 
 
+**Parameters**: 
+
+  * **mod** The mod name. 
+  * **keyword** The keyword. 
+
+
+**Return**: A pointer to the newly created [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) object, or NULL if an error occurred. 
+
+Creates a new [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) object with the specified mod and keyword that has been previously registered with `GetBitWiseManager().RegisterEndpoint`
+
+
 ### function NewFromID
 
 ```cpp
@@ -94,11 +114,25 @@ static BitWiseScriptRPC NewFromID(
 ```
 
 
+**Parameters**: 
+
+  * **index** The index value for the new [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) object. 
+
+
+**Return**: The newly created [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) object. 
+
+Creates a new [BitWiseScriptRPC](class_bit_wise_script_r_p_c.md) object from the given endpoint index.
+
+
 ### function Reset
 
 ```cpp
 override void Reset()
 ```
+
+Resets the script and the ScriptRPC object. 
+
+Reset the buffer and the associated ScriptRPC object so the RPC can be reused. 
 
 
 ### function Send
@@ -129,6 +163,14 @@ public void SetIndex(
 ```
 
 
+**Parameters**: 
+
+  * **index** The new index value. 
+
+
+Sets the index value.
+
+
 ### function ~BitWiseScriptRPC
 
 ```cpp
@@ -154,4 +196,4 @@ public autoptr ScriptRPC m_ScriptRPC;
 
 -------------------------------
 
-Updated on 2024-01-07 at 08:39:57 -0600
+Updated on 2024-01-27 at 14:16:25 -0600

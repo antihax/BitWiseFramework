@@ -7,16 +7,30 @@
  * To view a copy of this license, visit https://creativecommons.org/licenses/by-nd/4.0/
  *
  */
+
 static const int BITWISE_RPC_SIZE = 17;
+
 class BitWiseScriptRPC : BitStreamWriter {
 	private autoptr ScriptRPC m_ScriptRPC;
 	private int m_Index;
 
+	/**
+	 * @brief Initializes the BitWiseScriptRPC object.
+	 * 
+	 * This function creates a new ScriptRPC object.
+	 * 
+	 * @param serializer The serializer to be used for serialization (optional, default value is NULL).
+	 */
 	private void BitWiseScriptRPC(Serializer serializer = NULL) {
 		m_ScriptRPC = new ScriptRPC();
 		m_Context = m_ScriptRPC;
 	}
 
+	/**
+	 * Sets the index value.
+	 *
+	 * @param index The new index value.
+	 */
 	private void SetIndex(int index) {
 		m_Index = index;
 	}
@@ -24,15 +38,27 @@ class BitWiseScriptRPC : BitStreamWriter {
 	void ~BitWiseScriptRPC() {
 	}
 
+	/**
+	 * Creates a new BitWiseScriptRPC object from the given endpoint index.
+	 * 
+	 * @param index The index value for the new BitWiseScriptRPC object.
+	 * @return The newly created BitWiseScriptRPC object.
+	 */
 	static BitWiseScriptRPC NewFromID(int index) {
 		BitWiseScriptRPC rpc = new BitWiseScriptRPC();
 		rpc.SetIndex(index);
 		// Write the RPC index directly.
-
 		rpc.WriteAligned(index);
 		return rpc;
 	}
 
+	/**
+	 * Creates a new BitWiseScriptRPC object with the specified mod and keyword that has been previously registered with `GetBitWiseManager().RegisterEndpoint`
+	 * 
+	 * @param mod The mod name.
+	 * @param keyword The keyword.
+	 * @return A pointer to the newly created BitWiseScriptRPC object, or NULL if an error occurred.
+	 */
 	static BitWiseScriptRPC New(string mod, string keyword) {
 		auto g = GetBitWiseManager();
 		if (!g) {
@@ -54,6 +80,11 @@ class BitWiseScriptRPC : BitStreamWriter {
 		return rpc;
 	}
 
+	/**
+	 * @brief Resets the script and the ScriptRPC object.
+	 * 
+	 * Reset the buffer and the associated ScriptRPC object so the RPC can be reused.
+	 */
 	override void Reset() {
 		super.Reset();
 		m_ScriptRPC.Reset();
