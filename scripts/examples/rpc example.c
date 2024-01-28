@@ -54,7 +54,7 @@ modded class MissionBase {
 	bool RPC_SendMessage(PlayerIdentity sender, Object target, ParamsReadContext ctx) {
 		BitStreamReader br = new BitStreamReader(ctx);
 
-		// Read and pring the packed message
+		// Read and print the packed message
 		string message;
 		if (!br.ReadPacked(message))
 			return false;
